@@ -60,8 +60,8 @@ tau_CS = SX.sym('tau_CS', 6)
 mF = 50.
 mB = 50.
 
-com_approx = (comF*mF + comB * mB)/(mF + mB)
-delta = p[0:12] - vertcat(com_approx, com_approx, com_approx, com_approx)
+com_whole = (comF*mF + comB * mB)/(mF + mB)
+delta = p[0:12] - vertcat(com_whole, com_whole, com_whole, com_whole)
 
 I3 = SX.eye(3)
 I3cat = horzcat(I3, I3, I3, I3)
