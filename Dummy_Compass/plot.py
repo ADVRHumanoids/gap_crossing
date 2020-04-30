@@ -6,21 +6,62 @@ import math
 import time
 
 data = numpy.loadtxt('path.txt')
+start = [-1.0, -0.25]
+goal = [1.0, -0.25]
+gap_lenght = 0.1
+
+
 fig = plt.figure()
 ax = plt.axes()
 
-plt.gca().set_aspect('equal', adjustable='box')
-plt.xlim(-3.5, 3.5)
-plt.ylim(-3.5, 3.5)
+xmax = max(data[:,0])
+xmin = min(data[:,0])
+ymax = max(data[:,1])
+ymin = min(data[:,1])
+
+
+plt.gca().set_aspect('equal')
+plt.xlim(xmin-0.6, xmax+0.6)
+plt.ylim(ymin-0.6, ymax+0.6)
 
 y = numpy.linspace(-3, 3, 1000)
-matplotlib.axes.Axes.vlines(ax, -0.25/3, -3, 3, colors='k', linestyles='solid')
-matplotlib.axes.Axes.vlines(ax,  0.25/3, -3, 3, colors='k', linestyles='solid')
+matplotlib.axes.Axes.vlines(ax, -gap_lenght/2, ymin-0.6, ymax+0.6, colors='k', linestyles='solid')
+matplotlib.axes.Axes.vlines(ax,  gap_lenght/2, ymin-0.6, ymax+0.6, colors='k', linestyles='solid')
+matplotlib.axes.Axes.vlines(ax, -gap_lenght/2-0.05, ymin-0.6, ymax+0.6, colors='k', linestyles='dashed')
+matplotlib.axes.Axes.vlines(ax,  gap_lenght/2+0.05, ymin-0.6, ymax+0.6, colors='k', linestyles='dashed')
+
+plt.scatter(start[0], start[1], color = 'red')
+plt.scatter(goal[0], goal[1], color = 'red')
+plt.pause(0.5)
 
 dim = len(data[:, 0])
+R = data[:, 0:2]
+theta = data[:, 2:3]
+L = []
 for i in range(0, dim):
-    plt.plot([data[i,0],data[i,0]-math.cos(data[i,2])*0.5], [data[i,1], data[i,1]-math.sin(data[i,2])*0.5], '.-', color='blue' )
-    point = plt.scatter([data[i,0],data[i,0]-math.cos(data[i,2])*0.5], [data[i,1], data[i,1]-math.sin(data[i,2])*0.5], edgecolors=None)
+    L.append([R[i, 0]-math.cos(theta[i])*0.5, R[i, 1]-math.sin(theta[i])*0.5])
+L = numpy.array(L)
+r = 0
+l = 0
+for i in range(0, dim):
+    plt.plot([R[i,0], L[i,0]],[R[i, 1], L[i, 1]], '.-', color='blue' )
+    if i == 0:
+        stringR = 'R' + str(i)
+        plt.text(R[i, 0],R[i, 1],stringR)
+        stringL = 'L' + str(i)
+        plt.text(L[i, 0],L[i, 1],stringL)
+    elif i > 0 and R[i, 0]!= R[i-1, 0] or R[i, 1] != R[i-1, 1]:
+        r = r +1
+        stringR = 'R' + str(r)
+        plt.text(R[i, 0],R[i, 1],stringR)      
+    elif i > 0 and L[i, 0]!= L[i-1, 0] or L[i, 1] != L[i-1, 1]:
+        l = l + 1
+        stringL = 'L' + str(l)
+        if l == 5:
+            plt.text(L[i, 0]-0.1,L[i, 1]-0.1,stringL)
+        else:
+            plt.text(L[i, 0],L[i, 1],stringL)
+    point = plt.scatter([R[i,0], L[i,0]],[R[i, 1], L[i, 1]], edgecolors=None)
     plt.pause(0.5)
     point.remove()
 
