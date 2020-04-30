@@ -48,24 +48,13 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/matteo/gap_crossing_OMPL/biped_gap_crossing
+CMAKE_SOURCE_DIR = /home/matteo/gap_crossing_OMPL/compass_gap_crossing
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/matteo/gap_crossing_OMPL/biped_gap_crossing
+CMAKE_BINARY_DIR = /home/matteo/gap_crossing_OMPL/compass_gap_crossing
 
 #=============================================================================
 # Targets provided globally by CMake.
-
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
-
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
-
-.PHONY : rebuild_cache/fast
 
 # Special rule for the target edit_cache
 edit_cache:
@@ -78,11 +67,22 @@ edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
 
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+
+.PHONY : rebuild_cache/fast
+
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/matteo/gap_crossing_OMPL/biped_gap_crossing/CMakeFiles /home/matteo/gap_crossing_OMPL/biped_gap_crossing/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/matteo/gap_crossing_OMPL/compass_gap_crossing/CMakeFiles /home/matteo/gap_crossing_OMPL/compass_gap_crossing/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/matteo/gap_crossing_OMPL/biped_gap_crossing/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/matteo/gap_crossing_OMPL/compass_gap_crossing/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,44 +111,44 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named biped_ompl
+# Target rules for targets named compass_ompl
 
 # Build rule for target.
-biped_ompl: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 biped_ompl
-.PHONY : biped_ompl
+compass_ompl: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 compass_ompl
+.PHONY : compass_ompl
 
 # fast build rule for target.
-biped_ompl/fast:
-	$(MAKE) -f CMakeFiles/biped_ompl.dir/build.make CMakeFiles/biped_ompl.dir/build
-.PHONY : biped_ompl/fast
+compass_ompl/fast:
+	$(MAKE) -f CMakeFiles/compass_ompl.dir/build.make CMakeFiles/compass_ompl.dir/build
+.PHONY : compass_ompl/fast
 
-src/biped_ompl.o: src/biped_ompl.cpp.o
+src/compass_ompl.o: src/compass_ompl.cpp.o
 
-.PHONY : src/biped_ompl.o
+.PHONY : src/compass_ompl.o
 
 # target to build an object file
-src/biped_ompl.cpp.o:
-	$(MAKE) -f CMakeFiles/biped_ompl.dir/build.make CMakeFiles/biped_ompl.dir/src/biped_ompl.cpp.o
-.PHONY : src/biped_ompl.cpp.o
+src/compass_ompl.cpp.o:
+	$(MAKE) -f CMakeFiles/compass_ompl.dir/build.make CMakeFiles/compass_ompl.dir/src/compass_ompl.cpp.o
+.PHONY : src/compass_ompl.cpp.o
 
-src/biped_ompl.i: src/biped_ompl.cpp.i
+src/compass_ompl.i: src/compass_ompl.cpp.i
 
-.PHONY : src/biped_ompl.i
+.PHONY : src/compass_ompl.i
 
 # target to preprocess a source file
-src/biped_ompl.cpp.i:
-	$(MAKE) -f CMakeFiles/biped_ompl.dir/build.make CMakeFiles/biped_ompl.dir/src/biped_ompl.cpp.i
-.PHONY : src/biped_ompl.cpp.i
+src/compass_ompl.cpp.i:
+	$(MAKE) -f CMakeFiles/compass_ompl.dir/build.make CMakeFiles/compass_ompl.dir/src/compass_ompl.cpp.i
+.PHONY : src/compass_ompl.cpp.i
 
-src/biped_ompl.s: src/biped_ompl.cpp.s
+src/compass_ompl.s: src/compass_ompl.cpp.s
 
-.PHONY : src/biped_ompl.s
+.PHONY : src/compass_ompl.s
 
 # target to generate assembly for a file
-src/biped_ompl.cpp.s:
-	$(MAKE) -f CMakeFiles/biped_ompl.dir/build.make CMakeFiles/biped_ompl.dir/src/biped_ompl.cpp.s
-.PHONY : src/biped_ompl.cpp.s
+src/compass_ompl.cpp.s:
+	$(MAKE) -f CMakeFiles/compass_ompl.dir/build.make CMakeFiles/compass_ompl.dir/src/compass_ompl.cpp.s
+.PHONY : src/compass_ompl.cpp.s
 
 # Help Target
 help:
@@ -156,12 +156,12 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... biped_ompl"
-	@echo "... src/biped_ompl.o"
-	@echo "... src/biped_ompl.i"
-	@echo "... src/biped_ompl.s"
+	@echo "... rebuild_cache"
+	@echo "... compass_ompl"
+	@echo "... src/compass_ompl.o"
+	@echo "... src/compass_ompl.i"
+	@echo "... src/compass_ompl.s"
 .PHONY : help
 
 
