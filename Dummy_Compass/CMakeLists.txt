@@ -7,5 +7,5 @@ find_package(ompl 1.4.0 REQUIRED)
 
 include_directories(${OMPL_INCLUDE_DIRS})
 
-add_executable(Dummy_Compass src/Dummy_Compass.cpp)
-target_link_libraries(Dummy_Compass ${OMPL_LIBRARIES})
+add_executable(biped_ompl src/biped_ompl.cpp)
+target_link_libraries(biped_ompl ${OMPL_LIBRARIES})

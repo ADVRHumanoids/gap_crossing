@@ -1,0 +1,539 @@
+Control path with 77 states
+At state Compound state [
+RealVectorState [-1 -0.5]
+RealVectorState [-1 0.5]
+SO2State [1.5708]
+]
+  apply control DiscreteControl [2]
+  for 1 steps
+At state Compound state [
+RealVectorState [-0.5 -0.366025]
+RealVectorState [-1 0.5]
+SO2State [2.0944]
+]
+  apply control DiscreteControl [6]
+  for 1 steps
+At state Compound state [
+RealVectorState [-0.5 -0.366025]
+RealVectorState [-0.783494 0.625]
+SO2State [2.0944]
+]
+  apply control DiscreteControl [8]
+  for 1 steps
+At state Compound state [
+RealVectorState [-0.0669873 -0.116025]
+RealVectorState [-0.783494 0.625]
+SO2State [2.0944]
+]
+  apply control DiscreteControl [9]
+  for 1 steps
+At state Compound state [
+RealVectorState [-0.0669873 -0.116025]
+RealVectorState [-0.350481 0.875]
+SO2State [2.0944]
+]
+  apply control DiscreteControl [8]
+  for 1 steps
+At state Compound state [
+RealVectorState [0.366025 0.133975]
+RealVectorState [-0.350481 0.875]
+SO2State [2.0944]
+]
+  apply control DiscreteControl [4]
+  for 1 steps
+At state Compound state [
+RealVectorState [0.582532 0.258975]
+RealVectorState [-0.350481 0.875]
+SO2State [2.0944]
+]
+  apply control DiscreteControl [9]
+  for 1 steps
+At state Compound state [
+RealVectorState [0.582532 0.258975]
+RealVectorState [0.0825318 1.125]
+SO2State [2.0944]
+]
+  apply control DiscreteControl [2]
+  for 1 steps
+At state Compound state [
+RealVectorState [0.948557 0.625]
+RealVectorState [0.0825318 1.125]
+SO2State [2.61799]
+]
+  apply control DiscreteControl [8]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.19856 1.05801]
+RealVectorState [0.0825318 1.125]
+SO2State [2.61799]
+]
+  apply control DiscreteControl [6]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.19856 1.05801]
+RealVectorState [0.207532 1.34151]
+SO2State [2.61799]
+]
+  apply control DiscreteControl [4]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.32356 1.27452]
+RealVectorState [0.207532 1.34151]
+SO2State [2.61799]
+]
+  apply control DiscreteControl [6]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.32356 1.27452]
+RealVectorState [0.332532 1.55801]
+SO2State [2.61799]
+]
+  apply control DiscreteControl [4]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.44856 1.49103]
+RealVectorState [0.332532 1.55801]
+SO2State [2.61799]
+]
+  apply control DiscreteControl [6]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.44856 1.49103]
+RealVectorState [0.457532 1.77452]
+SO2State [2.61799]
+]
+  apply control DiscreteControl [9]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.44856 1.49103]
+RealVectorState [0.707532 2.20753]
+SO2State [2.61799]
+]
+  apply control DiscreteControl [4]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.57356 1.70753]
+RealVectorState [0.707532 2.20753]
+SO2State [2.61799]
+]
+  apply control DiscreteControl [4]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.69856 1.92404]
+RealVectorState [0.707532 2.20753]
+SO2State [2.61799]
+]
+  apply control DiscreteControl [6]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.69856 1.92404]
+RealVectorState [0.832532 2.42404]
+SO2State [2.61799]
+]
+  apply control DiscreteControl [6]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.69856 1.92404]
+RealVectorState [0.957532 2.64054]
+SO2State [2.61799]
+]
+  apply control DiscreteControl [8]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.94856 2.35705]
+RealVectorState [0.957532 2.64054]
+SO2State [2.61799]
+]
+  apply control DiscreteControl [4]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.07356 2.57356]
+RealVectorState [0.957532 2.64054]
+SO2State [2.61799]
+]
+  apply control DiscreteControl [9]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.07356 2.57356]
+RealVectorState [1.20753 3.07356]
+SO2State [2.61799]
+]
+  apply control DiscreteControl [9]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.07356 2.57356]
+RealVectorState [1.45753 3.50657]
+SO2State [2.61799]
+]
+  apply control DiscreteControl [8]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.32356 3.00657]
+RealVectorState [1.45753 3.50657]
+SO2State [2.61799]
+]
+  apply control DiscreteControl [6]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.32356 3.00657]
+RealVectorState [1.58253 3.72308]
+SO2State [2.61799]
+]
+  apply control DiscreteControl [4]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.44856 3.22308]
+RealVectorState [1.58253 3.72308]
+SO2State [2.61799]
+]
+  apply control DiscreteControl [1]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.44856 3.22308]
+RealVectorState [1.94856 4.0891]
+SO2State [2.0944]
+]
+  apply control DiscreteControl [2]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.81458 3.5891]
+RealVectorState [1.94856 4.0891]
+SO2State [2.61799]
+]
+  apply control DiscreteControl [4]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.93958 3.80561]
+RealVectorState [1.94856 4.0891]
+SO2State [2.61799]
+]
+  apply control DiscreteControl [6]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.93958 3.80561]
+RealVectorState [2.07356 4.30561]
+SO2State [2.61799]
+]
+  apply control DiscreteControl [1]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.93958 3.80561]
+RealVectorState [2.43958 4.67163]
+SO2State [2.0944]
+]
+  apply control DiscreteControl [1]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.93958 3.80561]
+RealVectorState [2.93958 4.80561]
+SO2State [1.5708]
+]
+  apply control DiscreteControl [1]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.93958 3.80561]
+RealVectorState [3.43958 4.67163]
+SO2State [1.0472]
+]
+  apply control DiscreteControl [1]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.93958 3.80561]
+RealVectorState [3.80561 4.30561]
+SO2State [0.523599]
+]
+  apply control DiscreteControl [1]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.93958 3.80561]
+RealVectorState [3.93958 3.80561]
+SO2State [1.7949e-09]
+]
+  apply control DiscreteControl [8]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.93958 3.30561]
+RealVectorState [3.93958 3.80561]
+SO2State [1.7949e-09]
+]
+  apply control DiscreteControl [6]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.93958 3.30561]
+RealVectorState [3.93958 3.55561]
+SO2State [1.7949e-09]
+]
+  apply control DiscreteControl [6]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.93958 3.30561]
+RealVectorState [3.93958 3.30561]
+SO2State [1.7949e-09]
+]
+  apply control DiscreteControl [13]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.93958 3.30561]
+RealVectorState [4.03958 3.30561]
+SO2State [1.7949e-09]
+]
+  apply control DiscreteControl [11]
+  for 1 steps
+At state Compound state [
+RealVectorState [3.03958 3.30561]
+RealVectorState [4.03958 3.30561]
+SO2State [1.7949e-09]
+]
+  apply control DiscreteControl [8]
+  for 1 steps
+At state Compound state [
+RealVectorState [3.03958 2.80561]
+RealVectorState [4.03958 3.30561]
+SO2State [1.7949e-09]
+]
+  apply control DiscreteControl [9]
+  for 1 steps
+At state Compound state [
+RealVectorState [3.03958 2.80561]
+RealVectorState [4.03958 2.80561]
+SO2State [1.7949e-09]
+]
+  apply control DiscreteControl [1]
+  for 1 steps
+At state Compound state [
+RealVectorState [3.03958 2.80561]
+RealVectorState [3.90561 2.30561]
+SO2State [-0.523599]
+]
+  apply control DiscreteControl [8]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.78958 2.3726]
+RealVectorState [3.90561 2.30561]
+SO2State [-0.523599]
+]
+  apply control DiscreteControl [6]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.78958 2.3726]
+RealVectorState [3.78061 2.0891]
+SO2State [-0.523599]
+]
+  apply control DiscreteControl [9]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.78958 2.3726]
+RealVectorState [3.53061 1.65609]
+SO2State [-0.523599]
+]
+  apply control DiscreteControl [4]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.66458 2.15609]
+RealVectorState [3.53061 1.65609]
+SO2State [-0.523599]
+]
+  apply control DiscreteControl [8]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.41458 1.72308]
+RealVectorState [3.53061 1.65609]
+SO2State [-0.523599]
+]
+  apply control DiscreteControl [9]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.41458 1.72308]
+RealVectorState [3.28061 1.22308]
+SO2State [-0.523599]
+]
+  apply control DiscreteControl [4]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.28958 1.50657]
+RealVectorState [3.28061 1.22308]
+SO2State [-0.523599]
+]
+  apply control DiscreteControl [9]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.28958 1.50657]
+RealVectorState [3.03061 0.790064]
+SO2State [-0.523599]
+]
+  apply control DiscreteControl [6]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.28958 1.50657]
+RealVectorState [2.90561 0.573557]
+SO2State [-0.523599]
+]
+  apply control DiscreteControl [11]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.37619 1.45657]
+RealVectorState [2.90561 0.573557]
+SO2State [-0.523599]
+]
+  apply control DiscreteControl [13]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.37619 1.45657]
+RealVectorState [2.99221 0.523557]
+SO2State [-0.523599]
+]
+  apply control DiscreteControl [8]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.12619 1.02356]
+RealVectorState [2.99221 0.523557]
+SO2State [-0.523599]
+]
+  apply control DiscreteControl [6]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.12619 1.02356]
+RealVectorState [2.86721 0.307051]
+SO2State [-0.523599]
+]
+  apply control DiscreteControl [4]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.00119 0.807051]
+RealVectorState [2.86721 0.307051]
+SO2State [-0.523599]
+]
+  apply control DiscreteControl [6]
+  for 1 steps
+At state Compound state [
+RealVectorState [2.00119 0.807051]
+RealVectorState [2.74221 0.0905445]
+SO2State [-0.523599]
+]
+  apply control DiscreteControl [8]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.75119 0.374038]
+RealVectorState [2.74221 0.0905445]
+SO2State [-0.523599]
+]
+  apply control DiscreteControl [4]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.62619 0.157532]
+RealVectorState [2.74221 0.0905445]
+SO2State [-0.523599]
+]
+  apply control DiscreteControl [11]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.71279 0.107532]
+RealVectorState [2.74221 0.0905445]
+SO2State [-0.523599]
+]
+  apply control DiscreteControl [13]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.71279 0.107532]
+RealVectorState [2.82881 0.0405445]
+SO2State [-0.523599]
+]
+  apply control DiscreteControl [11]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.79939 0.0575317]
+RealVectorState [2.82881 0.0405445]
+SO2State [-0.523599]
+]
+  apply control DiscreteControl [13]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.79939 0.0575317]
+RealVectorState [2.91542 -0.00945555]
+SO2State [-0.523599]
+]
+  apply control DiscreteControl [11]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.88599 0.00753175]
+RealVectorState [2.91542 -0.00945555]
+SO2State [-0.523599]
+]
+  apply control DiscreteControl [13]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.88599 0.00753175]
+RealVectorState [3.00202 -0.0594555]
+SO2State [-0.523599]
+]
+  apply control DiscreteControl [9]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.88599 0.00753175]
+RealVectorState [2.75202 -0.492468]
+SO2State [-0.523599]
+]
+  apply control DiscreteControl [2]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.75202 -0.492468]
+RealVectorState [2.75202 -0.492468]
+SO2State [1.7949e-09]
+]
+  apply control DiscreteControl [7]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.75202 -0.492468]
+RealVectorState [2.75202 -0.242468]
+SO2State [1.7949e-09]
+]
+  apply control DiscreteControl [7]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.75202 -0.492468]
+RealVectorState [2.75202 0.00753175]
+SO2State [1.7949e-09]
+]
+  apply control DiscreteControl [5]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.75202 -0.242468]
+RealVectorState [2.75202 0.00753175]
+SO2State [1.7949e-09]
+]
+  apply control DiscreteControl [5]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.75202 0.00753175]
+RealVectorState [2.75202 0.00753175]
+SO2State [1.7949e-09]
+]
+  apply control DiscreteControl [13]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.75202 0.00753175]
+RealVectorState [2.85202 0.00753175]
+SO2State [1.7949e-09]
+]
+  apply control DiscreteControl [11]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.85202 0.00753175]
+RealVectorState [2.85202 0.00753175]
+SO2State [1.7949e-09]
+]
+  apply control DiscreteControl [13]
+  for 1 steps
+At state Compound state [
+RealVectorState [1.85202 0.00753175]
+RealVectorState [2.95202 0.00753175]
+SO2State [1.7949e-09]
+]
+  apply control DiscreteControl [11]
+  for 1 steps
+Arrive at state Compound state [
+RealVectorState [1.95202 0.00753175]
+RealVectorState [2.95202 0.00753175]
+SO2State [1.7949e-09]
+]
+
