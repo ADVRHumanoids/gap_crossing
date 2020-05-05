@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import matplotlib.axes
 import time
 
-ns = 10 # number of steps
+ns = 40 # number of steps
 
 nc = 4  # number of contacts
 
@@ -24,7 +24,7 @@ F = (mB+mF) * 9.81
 f = F/4
 
 # Bounds and initial guess
-com_min = np.array([-10., -10., 0.])
+com_min = np.array([-10., -10., 0.3])
 com_max = np.array([10., 10., 2.])
 p_min = np.array([-10., -10., 0., -10., -10., 0., -10., -10., 0., -10., -10., 0.])
 p_max = np.array([10., 10., 0., 10., 10., 0., 10., 10., 0., 10., 10., 0.])
@@ -39,8 +39,8 @@ p_init = np.array([0., 0., 0., 0., 1., 0., 2., 0., 0., 2., 1., 0.])
 n_init = np.array([0., 0., 1., 0., 0., 1., 0., 0., 1., 0., 0.,  1.])
 f_init = np.array([0., 0., f, 0., 0., f, 0., 0., f, 0., 0., f])
 
-comF_final = np.array([2.5, 0.5, 0.5])
-comB_final = np.array([0.5, 0.5, 0.5])
+comF_final = np.array([5., 1.5, 0.5])
+comB_final = np.array([3., 1.5, 0.5])
 
 # Symbolic variables
 comF = SX.sym('comF', dim_comF)
@@ -83,7 +83,6 @@ F_CS = Function('F_CS', [p, comF, comB, f], [tau_CS] , ['p', 'comF', 'comB', 'f'
 # Environment
 Sc = SX.sym('Sc', 1)
 Sc = point[2]  # flat ground
-#Sc = point[2] + atan(1e6*(point[0]-2.3)) - atan(1e6*(point[0]-2.2))  # flat ground with gap
 
 F_env = Function('F_env', [point], [Sc], ['point'], ['Sc'])
 
@@ -118,8 +117,9 @@ dist_coms_feet = SX.sym('dist_coms_feet', 4)
 dist_coms_feet = vertcat(distB, distF)
 
 F_sqdist = Function('F_sqdist', [p, comB, comF], [dist_coms_feet], ['p', 'comB', 'comF'], ['dist_coms_feet'])
+
 # Start with an empty NLP
-NV = (dim_comF + dim_comB + dim_p + dim_n + dim_f) * ns
+NV = (dim_comF + dim_comB + dim_p + dim_f) * ns
 V = MX.sym('V', NV)
 
 # NLP vars bounds and init guess
@@ -136,7 +136,6 @@ offset = 0
 COMF = []
 COMB = []
 P = []
-N = []
 F = []
 
 # Formulate the NLP
@@ -189,21 +188,7 @@ for k in range(ns):
     v_init += p_init.tolist()
 
     offset += dim_p
-
-    # Normals at k-th node
-    N.append(V[offset:offset + dim_n])
-
-    if k == 0:
-        v_min += n_init.tolist()
-        v_max += n_init.tolist()
-    else:
-        v_min += n_min.tolist()
-        v_max += n_max.tolist()
-
-    v_init += n_init.tolist()
-
-    offset += dim_n
-
+    
     # Forces at k-th node
     F.append(V[offset:offset + dim_f])
 
@@ -229,11 +214,17 @@ g = []
 comF_history = MX(Sparsity.dense(dim_comF, ns))
 comB_history = MX(Sparsity.dense(dim_comB, ns))
 p_history = MX(Sparsity.dense(dim_p, ns))
-n_history = MX(Sparsity.dense(dim_n, ns))
 f_history = MX(Sparsity.dense(dim_f, ns))
 
 COMF_final = MX(comF_final.tolist())
 COMB_final = MX(comB_final.tolist())
+
+# Gap along the x-axis: (x1, x2)
+x1 = 2.25
+x2 = 2.35
+epsilon = 0.01
+gap_min = x1 - epsilon
+gap_max = x2 + epsilon
 
 
 for k in range(ns):
@@ -243,10 +234,7 @@ for k in range(ns):
     P_BL_k = P[k][3:6]
     P_FR_k = P[k][6:9]
     P_FL_k = P[k][9:12]
-    N_BR_k = N[k][0:3]
-    N_BL_k = N[k][3:6]
-    N_FR_k = N[k][6:9]
-    N_FL_k = N[k][9:12]
+ 
     F_BR_k = F[k][0:3]
     F_BL_k = F[k][3:6]
     F_FR_k = F[k][6:9]
@@ -261,10 +249,10 @@ for k in range(ns):
     Sc_FR_k = F_env(point=P_FR_k)['Sc']
     Sc_FL_k = F_env(point=P_FL_k)['Sc']
 
-    n_BR_k = N_env(point=P_BR_k)['n_env']
-    n_BL_k = N_env(point=P_BL_k)['n_env']
-    n_FR_k = N_env(point=P_FR_k)['n_env']
-    n_FL_k = N_env(point=P_FL_k)['n_env']
+    N_BR_k = N_env(point=P_BR_k)['n_env']
+    N_BL_k = N_env(point=P_BL_k)['n_env']
+    N_FR_k = N_env(point=P_FR_k)['n_env']
+    N_FL_k = N_env(point=P_FL_k)['n_env']
 
     tau_CS_k = F_CS(p=P[k], comF=COMF_k, comB=COMB_k, f=F[k])['tau_CS']
 
@@ -272,49 +260,38 @@ for k in range(ns):
     fr_BL_k = F_fr(force=F_BL_k, normal=N_BL_k)['friction_cone']
     fr_FR_k = F_fr(force=F_FR_k, normal=N_FR_k)['friction_cone']
     fr_FL_k = F_fr(force=F_FL_k, normal=N_FL_k)['friction_cone']
+
     
     # tau_CS_k = 0
     g += [tau_CS_k]
     g_min += np.zeros((6, 1)).tolist()
     g_max += np.zeros((6, 1)).tolist()
+
     
     # Sc = 0 for all feet
     g += [Sc_BR_k, Sc_BL_k, Sc_FR_k, Sc_FL_k]
     g_min += np.zeros((4, 1)).tolist()
     g_max += np.zeros((4, 1)).tolist()
-    
-    # normal orthogonal to the floor for all feet
-    g += [N_BR_k[0]-n_BR_k[0], N_BR_k[1]-n_BR_k[1], N_BR_k[2]-n_BR_k[2]]
-    g_min += np.zeros((3, 1)).tolist()
-    g_max += np.zeros((3, 1)).tolist()
-    
-    g += [N_BL_k[0]-n_BL_k[0], N_BL_k[1]-n_BL_k[1], N_BL_k[2]-n_BL_k[2]]
-    g_min += np.zeros((3, 1)).tolist()
-    g_max += np.zeros((3, 1)).tolist()
 
-    g += [N_FR_k[0]-n_FR_k[0], N_FR_k[1]-n_FR_k[1], N_FR_k[2]-n_FR_k[2]]
-    g_min += np.zeros((3, 1)).tolist()
-    g_max += np.zeros((3, 1)).tolist()
 
-    g += [N_FL_k[0]-n_FL_k[0], N_FL_k[1]-n_FL_k[1], N_FL_k[2]-n_FL_k[2]]
-    g_min += np.zeros((3, 1)).tolist()
-    g_max += np.zeros((3, 1)).tolist()
-    
     # friction cone
     g += [fr_BR_k, fr_BL_k, fr_FR_k, fr_FL_k]
     g_min += np.array([-1000., -1000., -1000., -1000., -1000., -1000., -1000., -1000.]).tolist()
     g_max += np.zeros((8, 1)).tolist()
 
+
     # next step is bounded: P[k+1] in a circle centered in P[k]
     if k < ns-1 :
         g += [dot(P_BR_k - P[k+1][0:3], P_BR_k - P[k+1][0:3]), dot(P_BL_k - P[k+1][3:6], P_BL_k - P[k+1][3:6]), dot(P_FR_k - P[k+1][6:9], P_FR_k - P[k+1][6:9]), dot(P_FL_k - P[k+1][9:12], P_FL_k - P[k+1][9:12])]
         g_min += np.zeros((4, 1)).tolist()
-        g_max += np.array([0.09, 0.09, 0.09, 0.09]).tolist()
+        g_max += np.array([0.25, 0.25, 0.25, 0.25]).tolist()
+
        
     # feet distance is bounded
-    g += [dot(P_BR_k - P_FR_k, P_BR_k - P_FR_k), dot(P_BL_k - P_FL_k, P_BL_k - P_FL_k), dot(P_BR_k - P_BL_k, P_BR_k - P_BL_k), dot(P_FR_k - P_FL_k, P_FR_k - P_FL_k)]
-    g_min += np.array([1., 1., 0.25, 0.25]).tolist()
-    g_max += np.array([9., 9., 2.25, 2.25]).tolist()
+    g += [dot(P_BR_k - P_FR_k, P_BR_k - P_FR_k), dot(P_BL_k - P_FL_k, P_BL_k - P_FL_k), dot(P_BR_k - P_BL_k, P_BR_k - P_BL_k), dot(P_FR_k - P_FL_k, P_FR_k - P_FL_k), dot(P_BR_k - P_FL_k, P_BR_k - P_FL_k), dot(P_BL_k - P_FR_k, P_BL_k - P_FR_k)]
+    g_min += np.array([1., 1., 0.25, 0.25, 1.25, 1.25]).tolist()
+    g_max += np.array([9., 9., 2.25, 2.25, 11.25, 11.25]).tolist()
+
     
     # one and only one foot at time can be moved
     if k < ns-1 :
@@ -326,11 +303,8 @@ for k in range(ns):
         g += [move_BR*move_BL, move_BR*move_FR, move_BR*move_FL, move_BL*move_FR, move_BL*move_FL, move_FR*move_FL]
         g_min += np.zeros((6, 1)).tolist()
         g_max += np.zeros((6, 1)).tolist()
-        """
-        g += [move_BR + move_BL + move_FR + move_FL]
-        g_min += np.array([0.]).tolist()
-        g_max += np.array([0.09]).tolist()
-        """
+
+
     # COMs to feet constraints
     dist_coms_feet_k = F_sqdist(p=P[k], comB=COMB_k, comF=COMF_k)['dist_coms_feet']
     g += [dist_coms_feet_k]
@@ -338,19 +312,24 @@ for k in range(ns):
     max_dist = 0.5
     g_min += np.array([min_dist, min_dist, min_dist, min_dist]).tolist()
     g_max += np.array([max_dist, max_dist, max_dist, max_dist]).tolist()
+
     
-    """
-    # COMs distance
-    g += [dot(COMF_k-COMB_k, COMF_k-COMB_k)]
-    g_min += np.array([2.9]).tolist()
-    g_max += np.array([5.3]).tolist()
-    """
+    # Gap
+    gap_BR = (P_BR_k[0] - gap_min) * (P_BR_k[0] - gap_max)
+    gap_BL = (P_BL_k[0] - gap_min) * (P_BL_k[0] - gap_max)
+    gap_FR = (P_FR_k[0] - gap_min) * (P_FR_k[0] - gap_max)
+    gap_FL = (P_FL_k[0] - gap_min) * (P_FL_k[0] - gap_max)
+
+    g += [gap_BR, gap_BL, gap_FR, gap_FL]
+    g_min += np.zeros((4, 1)).tolist()
+    g_max += np.array([10000., 10000., 10000., 10000.]).tolist()
     
+
+    # Save decision variables
     comF_history[0:dim_comF, k] = COMF[k]
     comB_history[0:dim_comB, k] = COMB[k]
     p_history[0:dim_p, k] = P[k]
     f_history[0:dim_f, k] = F[k]
-    n_history[0:dim_n, k] = N[k]
 
 g = vertcat(*g)
 v_init = vertcat(*v_init)
@@ -362,7 +341,8 @@ v_max = vertcat(*v_max)
 # Create an NLP solver
 prob = {'f': J, 'x': V, 'g': g}
 opts = {'ipopt.tol': 1e-3,
-        'ipopt.max_iter': 100000
+        'ipopt.max_iter': 100000,
+        'ipopt.print_info_string': 'yes'
         }
 solver = nlpsol('solver', 'ipopt', prob, opts)
 
@@ -377,8 +357,6 @@ com_B_hist = Function("com_B_hist", [V], [comB_history])
 com_B_hist_value = com_B_hist(w_opt).full()
 p_hist = Function("q_hist", [V], [p_history])
 p_hist_value = p_hist(w_opt).full()
-n_hist = Function("n_hist", [V], [n_history])
-n_hist_value = n_hist(w_opt).full()
 f_hist = Function("f_hist", [V], [f_history])
 f_hist_value = f_hist(w_opt).full()
 
@@ -401,7 +379,7 @@ dark_green = tuple(np.array([0., 102., 0.])/255.)
 pink = tuple(np.array([255., 153., 204.])/255.)
 black = tuple(np.array([0., 0., 0.])/255.)
 
-colors = [blue, red, grey, purple, green, brown, orange, dark_green, pink, black]
+colors = [blue, red, grey, purple, green, brown, orange, dark_green, pink, black, blue, red, grey, purple, green, brown, orange, dark_green, pink, black, blue, red, grey, purple, green, brown, orange, dark_green, pink, black, blue, red, grey, purple, green, brown, orange, dark_green, pink, black]
 
 
 """
@@ -428,14 +406,25 @@ for i in range(0, ns):
     plt.pause(2)
 plt.show()
 """
+
 comF_final = comF_final.tolist()
 comB_final = comB_final.tolist()
 
-fig2 = plt.figure()
+lin=np.linspace(-0.5, 1.5, 3000)
+ones = np.ones(lin.shape)
+
+x_gap_min = (x1*ones).tolist()
+x_gap_max = (x2*ones).tolist()
+x_safe_min = (gap_min*ones).tolist()
+x_safe_max = (gap_max*ones).tolist()
+
+y_gap = lin.tolist()
+z_gap = np.zeros(lin.shape).tolist()
 
 for i in range(0, ns):
-    ax = fig2.add_subplot(5, 2, i+1, projection='3d')
-    #ax = fig2.add_subplot(111, projection='3d')
+    fig = plt.figure()
+    #ax = fig1.add_subplot(5, 2, i+1, projection='3d')
+    ax = fig.add_subplot(111, projection='3d')
     plt.gca().set_aspect('equal')
     title = 'Movement ' + str(i)
     ax.set_title(title)
@@ -443,40 +432,44 @@ for i in range(0, ns):
     ax.set_ylabel('y')
     ax.set_zlabel('z')
     ax.set_zlim(0.0, 0.6)
-    ax.set_xlim(-1.0, 3.0)
+    ax.set_xlim(-1.0, 6.0)
     ax.set_ylim(-0.5, 1.5)
 
     ax.scatter([comF_final[0]], [comF_final[1]], [comF_final[2]], c = 'red', marker = '*', s=400, edgecolors=None)
     ax.scatter([comB_final[0]], [comB_final[1]], [comB_final[2]], c = 'red', marker = '*', s=400, edgecolors=None)
     COMF_i = [com_F_hist_value[0][i], com_F_hist_value[1][i], com_F_hist_value[2][i]]
     COMB_i = [com_B_hist_value[0][i], com_B_hist_value[1][i], com_B_hist_value[2][i]]
-    plt.plot([COMF_i[0], COMB_i[0]], [COMF_i[1], COMB_i[1]], [COMF_i[2], COMB_i[2]], color = colors[i], linewidth=3)
-
+    plt.plot([COMF_i[0], COMB_i[0]], [COMF_i[1], COMB_i[1]], [COMF_i[2], COMB_i[2]], color = blue, linewidth=3)
     
 
-    plt.plot([COMB_i[0], FOOT_BR[0, i]], [COMB_i[1], FOOT_BR[1, i]], [COMB_i[2], FOOT_BR[2, i]], color = colors[i], linewidth=3)
-    plt.plot([COMB_i[0], FOOT_BL[0, i]], [COMB_i[1], FOOT_BL[1, i]], [COMB_i[2], FOOT_BL[2, i]], color = colors[i], linewidth=3)
-    plt.plot([COMF_i[0], FOOT_FR[0, i]], [COMF_i[1], FOOT_FR[1, i]], [COMF_i[2], FOOT_FR[2, i]], color = colors[i], linewidth=3)
-    plt.plot([COMF_i[0], FOOT_FL[0, i]], [COMF_i[1], FOOT_FL[1, i]], [COMF_i[2], FOOT_FL[2, i]], color = colors[i], linewidth=3)
-
-    if i == 0:
-        continue
-
-    COMF_im1 = [com_F_hist_value[0][i-1], com_F_hist_value[1][i-1], com_F_hist_value[2][i-1]]
-    COMB_im1 = [com_B_hist_value[0][i-1], com_B_hist_value[1][i-1], com_B_hist_value[2][i-1]]
-    plt.plot([COMF_im1[0], COMB_im1[0]], [COMF_im1[1], COMB_im1[1]], [COMF_im1[2], COMB_im1[2]], '--', color = colors[i-1], linewidth=2)
+    plt.plot([COMB_i[0], FOOT_BR[0, i]], [COMB_i[1], FOOT_BR[1, i]], [COMB_i[2], FOOT_BR[2, i]], color = blue, linewidth=3)
+    plt.plot([COMB_i[0], FOOT_BL[0, i]], [COMB_i[1], FOOT_BL[1, i]], [COMB_i[2], FOOT_BL[2, i]], color = blue, linewidth=3)
+    plt.plot([COMF_i[0], FOOT_FR[0, i]], [COMF_i[1], FOOT_FR[1, i]], [COMF_i[2], FOOT_FR[2, i]], color = blue, linewidth=3)
+    plt.plot([COMF_i[0], FOOT_FL[0, i]], [COMF_i[1], FOOT_FL[1, i]], [COMF_i[2], FOOT_FL[2, i]], color = blue, linewidth=3)
 
 
-    plt.plot([COMB_im1[0], FOOT_BR[0, i-1]], [COMB_im1[1], FOOT_BR[1, i-1]], [COMB_im1[2], FOOT_BR[2, i-1]], '--', color = colors[i-1], linewidth=2)
-    plt.plot([COMB_im1[0], FOOT_BL[0, i-1]], [COMB_im1[1], FOOT_BL[1, i-1]], [COMB_im1[2], FOOT_BL[2, i-1]], '--', color = colors[i-1], linewidth=2)
-    plt.plot([COMF_im1[0], FOOT_FR[0, i-1]], [COMF_im1[1], FOOT_FR[1, i-1]], [COMF_im1[2], FOOT_FR[2, i-1]], '--', color = colors[i-1], linewidth=2)
-    plt.plot([COMF_im1[0], FOOT_FL[0, i-1]], [COMF_im1[1], FOOT_FL[1, i-1]], [COMF_im1[2], FOOT_FL[2, i-1]], '--', color = colors[i-1], linewidth=2)
-    
+    plt.plot([FOOT_BR[0, i], FOOT_BL[0, i]], [FOOT_BR[1, i], FOOT_BL[1, i]], [FOOT_BR[2, i], FOOT_BL[2, i]], color = black, linewidth = 1)
+    plt.plot([FOOT_BL[0, i], FOOT_FL[0, i]], [FOOT_BL[1, i], FOOT_FL[1, i]], [FOOT_BL[2, i], FOOT_FL[2, i]], color = black, linewidth = 1)
+    plt.plot([FOOT_FL[0, i], FOOT_FR[0, i]], [FOOT_FL[1, i], FOOT_FR[1, i]], [FOOT_FL[2, i], FOOT_FR[2, i]], color = black, linewidth = 1)
+    plt.plot([FOOT_FR[0, i], FOOT_BR[0, i]], [FOOT_FR[1, i], FOOT_BR[1, i]], [FOOT_FR[2, i], FOOT_BR[2, i]], color = black, linewidth = 1)
 
-plt.show()
+    COM_i = ((mF*np.array(COMF_i) + mB*np.array(COMB_i))/(mF+mB)).tolist()
+    plt.plot([COM_i[0], COM_i[0]], [COM_i[1], COM_i[1]], [COM_i[2], 0.], '--', color = black, linewidth = 1)
+    ax.scatter([COM_i[0]], [COM_i[1]], [COM_i[2]], c = black, marker = 'o', s = 100)
 
+    plt.plot(x_gap_min, y_gap, z_gap, color = black, linewidth = 1)
+    plt.plot(x_gap_max, y_gap, z_gap, color = black, linewidth = 1)
+    plt.plot(x_safe_min, y_gap, z_gap, '--', color = black, linewidth = 1)
+    plt.plot(x_safe_max, y_gap, z_gap, '--', color = black, linewidth = 1)
 
+    if i != 0:
+        COMF_im1 = [com_F_hist_value[0][i-1], com_F_hist_value[1][i-1], com_F_hist_value[2][i-1]]
+        COMB_im1 = [com_B_hist_value[0][i-1], com_B_hist_value[1][i-1], com_B_hist_value[2][i-1]]
+        plt.plot([COMF_im1[0], COMB_im1[0]], [COMF_im1[1], COMB_im1[1]], [COMF_im1[2], COMB_im1[2]], '--', color = blue, linewidth=2)
 
-
-
-
+        plt.plot([COMB_im1[0], FOOT_BR[0, i-1]], [COMB_im1[1], FOOT_BR[1, i-1]], [COMB_im1[2], FOOT_BR[2, i-1]], '--', color = blue, linewidth=2)
+        plt.plot([COMB_im1[0], FOOT_BL[0, i-1]], [COMB_im1[1], FOOT_BL[1, i-1]], [COMB_im1[2], FOOT_BL[2, i-1]], '--', color = blue, linewidth=2)
+        plt.plot([COMF_im1[0], FOOT_FR[0, i-1]], [COMF_im1[1], FOOT_FR[1, i-1]], [COMF_im1[2], FOOT_FR[2, i-1]], '--', color = blue, linewidth=2)
+        plt.plot([COMF_im1[0], FOOT_FL[0, i-1]], [COMF_im1[1], FOOT_FL[1, i-1]], [COMF_im1[2], FOOT_FL[2, i-1]], '--', color = blue, linewidth=2)
+    plt.show()
+    #plt.savefig('movement'+str(i)+'.png')
