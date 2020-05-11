@@ -5,3 +5,10 @@ Implementation of the quadruped in OMPL. It has been treated as a unicycle. Prim
 - rolling with 2 wheels (F/B)
 - turning on the spot
 - stepping with one foot (fw/bw)
+
+
+A gap is considered.
+
+To be done:
+- activate steps only when close enough to the gap
+- introduce obstacles if needed
