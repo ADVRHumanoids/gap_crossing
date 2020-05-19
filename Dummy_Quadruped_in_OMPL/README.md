@@ -10,5 +10,4 @@ Implementation of the quadruped in OMPL. It has been treated as a unicycle. Prim
 A gap is considered.
 
 To be done:
-- activate steps only when close enough to the gap
 - introduce obstacles if needed
