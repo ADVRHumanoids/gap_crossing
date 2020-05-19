@@ -12,6 +12,9 @@ To be done:
 - introduce obstacles if needed
 
 *Video 1*: each foot can step everywhere, infinite gap
+
 *Video 2*: a foot can step only if it is in the green area, infinite gap
+
 *Video 3*: a foot can step only if it is in the green area, finite gap (the robot steps with all the four feet)
+
 *Video 4*: a foot can step only if it is in the green area, finite gap (the robot steps with only the two back feet)
