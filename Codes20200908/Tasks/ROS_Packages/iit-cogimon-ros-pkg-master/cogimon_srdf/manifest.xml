@@ -1,0 +1,18 @@
+<package>
+  <description brief="cogimon_srdf">
+
+     cogimon_srdf
+
+  </description>
+  <author>Enrico</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/cogimon_srdf</url>
+  <depend package="roscpp"/>
+  <depend package="rospy"/>
+  <depend package="srdfdom"/>
+  <depend package="urdf"/>
+
+</package>
+
+
