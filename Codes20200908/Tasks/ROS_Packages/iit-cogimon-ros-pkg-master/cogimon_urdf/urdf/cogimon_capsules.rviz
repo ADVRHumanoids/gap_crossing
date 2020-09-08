@@ -1,0 +1,1562 @@
+<?xml version="1.0" ?>
+<robot name="cogimon">
+  <material name="grey">
+    <color rgba="0.5 0.5 0.5 1.0"/>
+  </material>
+  <material name="dark_grey">
+    <color rgba="0.3 0.3 0.3 1.0"/>
+  </material>
+  <material name="red">
+    <color rgba="1.0 0.0 0.0 1.0"/>
+  </material>
+  <material name="green">
+    <color rgba="0.0 1.0 0.0 1.0"/>
+  </material>
+  <link name="base_link"/>
+  <link name="Waist">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="-0.056796324 0.00045196345 -0.038136153"/>
+      <mass value="3.4599462"/>
+      <inertia ixx="0.038130318" ixy="9.5451056e-05" ixz="-8.2481481e-05" iyy="0.0089760596" iyz="9.1637353e-06" izz="0.039650845"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/Waist.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin rpy="-1.57035042433 8.58849054656e-05 -8.58466177105e-05" xyz="-0.0598389 9.5e-05 -0.02992445"/>
+      <geometry>
+        <cylinder length="0.200268020648" radius="0.0955748"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-1.57035042433 8.58849054656e-05 -8.58466177105e-05" xyz="-0.059848 -0.100039 -0.029969"/>
+      <geometry>
+        <sphere radius="0.0955748"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-1.57035042433 8.58849054656e-05 -8.58466177105e-05" xyz="-0.059830 0.100229 -0.029880"/>
+      <geometry>
+        <sphere radius="0.0955748"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="base_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+    <parent link="base_link"/>
+    <child link="Waist"/>
+  </joint>
+  <joint name="imu_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="-0.146332 0.0 -0.03875"/>
+    <parent link="Waist"/>
+    <child link="imu_link"/>
+  </joint>
+  <link name="imu_link">
+    <inertial>
+      <origin xyz="0.0 0.0 0.0"/>
+      <mass value="0.01"/>
+      <inertia ixx="1e-06" ixy="0.0" ixz="0.0" iyy="1e-06" iyz="0.0" izz="1e-06"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="LHipMot">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="-0.041435899 -0.00024099021 -0.067437774"/>
+      <mass value="2.0936467"/>
+      <inertia ixx="0.010806924" ixy="3.3743172e-05" ixz="-0.0013329083" iyy="0.011288691" iyz="5.6918305e-05" izz="0.0053916798"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/HipRoll.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <origin rpy="-0.348113811608 0.346017263503 -0.0614374307758" xyz="-0.0421235 -0.02434298 -0.0664201"/>
+      <geometry>
+        <cylinder length="0.117816746253" radius="0.0789238"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-0.348113811608 0.346017263503 -0.0614374307758" xyz="-0.062103 -0.043247 -0.118513"/>
+      <geometry>
+        <sphere radius="0.0789238"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-0.348113811608 0.346017263503 -0.0614374307758" xyz="-0.022144 -0.005439 -0.014327"/>
+      <geometry>
+        <sphere radius="0.0789238"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="LThighUpLeg">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="0.00058688639 -0.062440385 -0.085057072"/>
+      <mass value="1.6115687"/>
+      <inertia ixx="0.016169151" ixy="-2.1886129e-05" ixz="6.0058109e-05" iyy="0.0144378" iyz="-0.0027173225" izz="0.0039254506"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/HipPitch.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin rpy="-0.369195214407 0.00179971542806 -0.000336049048057" xyz="-0.00159782 -0.0661959 -0.0759693"/>
+      <geometry>
+        <cylinder length="0.144978554267" radius="0.0731555"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-0.369195214407 0.00179971542806 -0.000336049048057" xyz="-0.001728 -0.092355 -0.143574"/>
+      <geometry>
+        <sphere radius="0.0731555"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-0.369195214407 0.00179971542806 -0.000336049048057" xyz="-0.001467 -0.040037 -0.008365"/>
+      <geometry>
+        <sphere radius="0.0731555"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="LThighLowLeg">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="-0.02113641 -0.0042862386 -0.038232267"/>
+      <mass value="1.7454681"/>
+      <inertia ixx="0.0059857438" ixy="-4.0155441e-05" ixz="-0.00080168603" iyy="0.0066483492" iyz="-0.00011435964" izz="0.0044665032"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/HipYaw.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <origin rpy="2.67220248899 -0.09478204323 -0.391623341871" xyz="-0.004103405 -0.01108644 -0.034134805"/>
+      <geometry>
+        <cylinder length="0.0560156299915" radius="0.0944457"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="2.67220248899 -0.09478204323 -0.391623341871" xyz="-0.001453 0.001526 -0.009268"/>
+      <geometry>
+        <sphere radius="0.0944457"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="2.67220248899 -0.09478204323 -0.391623341871" xyz="-0.006754 -0.023699 -0.059001"/>
+      <geometry>
+        <sphere radius="0.0944457"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="LLowLeg">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="0.027363015 -0.05780207 -0.19306454"/>
+      <mass value="3.7014912"/>
+      <inertia ixx="0.064669769" ixy="0.00036914631" ixz="0.0053710941" iyy="0.063323486" iyz="-0.0027319883" izz="0.0081842652"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/KneePitch.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin rpy="3.06079524122 0.166903270631 2.24129950508" xyz="0.03800144 -0.0602178 -0.1930794005"/>
+      <geometry>
+        <cylinder length="0.390900702153" radius="0.0751242"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="3.06079524122 0.166903270631 2.24129950508" xyz="0.005531 -0.044662 -0.000974"/>
+      <geometry>
+        <sphere radius="0.0751242"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="3.06079524122 0.166903270631 2.24129950508" xyz="0.070472 -0.075773 -0.385185"/>
+      <geometry>
+        <sphere radius="0.0751242"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="LFootmot">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0011213007 0.00046152281 -1.144967e-06"/>
+      <mass value="0.17723821"/>
+      <inertia ixx="2.8142035e-05" ixy="9.1715528e-08" ixz="-2.1701012e-10" iyy="9.7378402e-05" iyz="3.7303915e-10" izz="0.00011570584"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/AnklePitch.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin rpy="-1.0081383463 1.57079632675 -1.00813834626" xyz="0.0 -1.0941e-13 1.83262e-13"/>
+      <geometry>
+        <cylinder length="0.033835" radius="0.0195224"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-1.0081383463 1.57079632675 -1.00813834626" xyz="-0.016917 -0.000000 -0.000000"/>
+      <geometry>
+        <sphere radius="0.0195224"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-1.0081383463 1.57079632675 -1.00813834626" xyz="0.016917 0.000000 0.000000"/>
+      <geometry>
+        <sphere radius="0.0195224"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="LFoot">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="-0.0077094563 -6.5520742e-05 -0.043453782"/>
+      <mass value="2.0663292"/>
+      <inertia ixx="0.0026932116" ixy="4.2852647e-06" ixz="0.00037001167" iyy="0.0071293752" iyz="-2.5956611e-06" izz="0.0086807822"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/Foot2.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 -0.061"/>
+      <geometry>
+        <box size="0.21 0.11 0.015"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="LHipLat" type="revolute">
+    <origin rpy="0.0 0.0 0.0" xyz="0.01545 0.112 -0.05"/>
+    <axis xyz="1.0 0.0 0.0"/>
+    <parent link="Waist"/>
+    <child link="LHipMot"/>
+    <limit effort="200.0" lower="-0.523598775598" upper="1.65806278939" velocity="7.4"/>
+    <dynamics damping="3.0" friction="0.0"/>
+  </joint>
+  <joint name="LHipSag" type="revolute">
+    <origin rpy="0.0 0.0 0.0" xyz="-0.059 0.07865 -0.1185"/>
+    <axis xyz="0.0 1.0 0.0"/>
+    <parent link="LHipMot"/>
+    <child link="LThighUpLeg"/>
+    <limit effort="200.0" lower="-1.91986217719" upper="1.55334303428" velocity="7.4"/>
+    <dynamics damping="3.0" friction="0.0"/>
+  </joint>
+  <joint name="LHipYaw" type="revolute">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 -0.09 -0.25645"/>
+    <axis xyz="0.0 0.0 1.0"/>
+    <parent link="LThighUpLeg"/>
+    <child link="LThighLowLeg"/>
+    <limit effort="120.0" lower="-0.558505360638" upper="1.5707963268" velocity="4.6"/>
+    <dynamics damping="3.0" friction="0.0"/>
+  </joint>
+  <joint name="LKneePitch" type="revolute">
+    <origin rpy="0.0 0.0 0.0" xyz="-0.039 0.0641 -0.0607"/>
+    <axis xyz="0.0 1.0 0.0"/>
+    <parent link="LThighLowLeg"/>
+    <child link="LLowLeg"/>
+    <limit effort="200.0" lower="0.0" upper="2.44346095279" velocity="5.5"/>
+    <dynamics damping="3.0" friction="0.0"/>
+  </joint>
+  <joint name="LAnklePitch" type="revolute">
+    <origin rpy="0.0 0.0 0.0" xyz="0.039 -0.0616 -0.425294"/>
+    <axis xyz="0.0 1.0 0.0"/>
+    <parent link="LLowLeg"/>
+    <child link="LFootmot"/>
+    <limit effort="200.0" lower="-0.872664625997" upper="0.698131700798" velocity="4.9"/>
+    <dynamics damping="0.1" friction="0.0"/>
+  </joint>
+  <joint name="LAnkleRoll" type="revolute">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+    <axis xyz="1.0 0.0 0.0"/>
+    <parent link="LFootmot"/>
+    <child link="LFoot"/>
+    <limit effort="60.0" lower="-0.261799387799" upper="0.261799387799" velocity="3.2"/>
+    <dynamics damping="3.0" friction="0.0"/>
+  </joint>
+  <link name="RHipMot">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="-0.041435899 0.00024099021 -0.067437774"/>
+      <mass value="2.0936467"/>
+      <inertia ixx="0.010806924" ixy="-3.3743172e-05" ixz="-0.0013329083" iyy="0.011288691" iyz="-5.6918305e-05" izz="0.0053916798"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/HipRoll.stl" scale="0.001 -0.001 0.001"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <origin rpy="0.348113811608 0.346017263503 0.0614374307758" xyz="-0.0421235 0.02434298 -0.0664201"/>
+      <geometry>
+        <cylinder length="0.117816746253" radius="0.0789238"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0.348113811608 0.346017263503 0.0614374307758" xyz="-0.062103 0.043247 -0.118513"/>
+      <geometry>
+        <sphere radius="0.0789238"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0.348113811608 0.346017263503 0.0614374307758" xyz="-0.022144 0.005439 -0.014327"/>
+      <geometry>
+        <sphere radius="0.0789238"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="RThighUpLeg">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="0.00058688639 0.062440385 -0.085057072"/>
+      <mass value="1.6115687"/>
+      <inertia ixx="0.016169151" ixy="2.1886129e-05" ixz="6.0058109e-05" iyy="0.0144378" iyz="0.0027173225" izz="0.0039254506"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/HipPitch.stl" scale="0.001 -0.001 0.001"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin rpy="0.369195214407 0.00179971542806 0.000336049048057" xyz="-0.00159782 0.0661959 -0.0759693"/>
+      <geometry>
+        <cylinder length="0.144978554267" radius="0.0731555"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0.369195214407 0.00179971542806 0.000336049048057" xyz="-0.001728 0.092355 -0.143574"/>
+      <geometry>
+        <sphere radius="0.0731555"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0.369195214407 0.00179971542806 0.000336049048057" xyz="-0.001467 0.040037 -0.008365"/>
+      <geometry>
+        <sphere radius="0.0731555"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="RThighLowLeg">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="-0.02113641 0.0042862386 -0.038232267"/>
+      <mass value="1.7454681"/>
+      <inertia ixx="0.0059857438" ixy="4.0155441e-05" ixz="-0.00080168603" iyy="0.0066483492" iyz="0.00011435964" izz="0.0044665032"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/HipYaw.stl" scale="0.001 -0.001 0.001"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <origin rpy="-2.67220248899 -0.09478204323 0.391623341871" xyz="-0.004103405 0.01108644 -0.034134805"/>
+      <geometry>
+        <cylinder length="0.0560156299915" radius="0.0944457"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-2.67220248899 -0.09478204323 0.391623341871" xyz="-0.001453 -0.001526 -0.009268"/>
+      <geometry>
+        <sphere radius="0.0944457"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-2.67220248899 -0.09478204323 0.391623341871" xyz="-0.006754 0.023699 -0.059001"/>
+      <geometry>
+        <sphere radius="0.0944457"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="RLowLeg">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="0.027363015 0.05780207 -0.19306454"/>
+      <mass value="3.7014912"/>
+      <inertia ixx="0.064669769" ixy="-0.00036914631" ixz="0.0053710941" iyy="0.063323486" iyz="0.0027319883" izz="0.0081842652"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/KneePitch.stl" scale="0.001 -0.001 0.001"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin rpy="-3.06079524122 0.166903270631 -2.24129950508" xyz="0.03800144 0.0602178 -0.1930794005"/>
+      <geometry>
+        <cylinder length="0.390900702153" radius="0.0751242"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-3.06079524122 0.166903270631 -2.24129950508" xyz="0.005531 0.044662 -0.000974"/>
+      <geometry>
+        <sphere radius="0.0751242"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-3.06079524122 0.166903270631 -2.24129950508" xyz="0.070472 0.075773 -0.385185"/>
+      <geometry>
+        <sphere radius="0.0751242"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="RFootmot">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0011213007 0.00046152281 -1.144967e-06"/>
+      <mass value="0.17723821"/>
+      <inertia ixx="2.8142035e-05" ixy="9.1715528e-08" ixz="-2.1701012e-10" iyy="9.7378402e-05" iyz="3.7303915e-10" izz="0.00011570584"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/AnklePitch.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin rpy="-1.0081383463 1.57079632675 -1.00813834626" xyz="0.0 -1.0941e-13 1.83262e-13"/>
+      <geometry>
+        <cylinder length="0.033835" radius="0.0195224"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-1.0081383463 1.57079632675 -1.00813834626" xyz="-0.016917 -0.000000 -0.000000"/>
+      <geometry>
+        <sphere radius="0.0195224"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-1.0081383463 1.57079632675 -1.00813834626" xyz="0.016917 0.000000 0.000000"/>
+      <geometry>
+        <sphere radius="0.0195224"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="RFoot">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="-0.0077094563 -6.5520742e-05 -0.043453782"/>
+      <mass value="2.0663292"/>
+      <inertia ixx="0.0026932116" ixy="4.2852647e-06" ixz="0.00037001167" iyy="0.0071293752" iyz="-2.5956611e-06" izz="0.0086807822"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/Foot2.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 -0.061"/>
+      <geometry>
+        <box size="0.21 0.11 0.015"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="RHipLat" type="revolute">
+    <origin rpy="0.0 0.0 0.0" xyz="0.01545 -0.112 -0.05"/>
+    <axis xyz="1.0 0.0 0.0"/>
+    <parent link="Waist"/>
+    <child link="RHipMot"/>
+    <limit effort="200.0" lower="-1.65806278939" upper="0.523598775598" velocity="7.4"/>
+    <dynamics damping="3.0" friction="0.0"/>
+  </joint>
+  <joint name="RHipSag" type="revolute">
+    <origin rpy="0.0 0.0 0.0" xyz="-0.059 -0.07865 -0.1185"/>
+    <axis xyz="0.0 1.0 0.0"/>
+    <parent link="RHipMot"/>
+    <child link="RThighUpLeg"/>
+    <limit effort="200.0" lower="-1.91986217719" upper="1.55334303428" velocity="7.4"/>
+    <dynamics damping="3.0" friction="0.0"/>
+  </joint>
+  <joint name="RHipYaw" type="revolute">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.09 -0.25645"/>
+    <axis xyz="0.0 0.0 1.0"/>
+    <parent link="RThighUpLeg"/>
+    <child link="RThighLowLeg"/>
+    <limit effort="120.0" lower="-1.5707963268" upper="0.558505360638" velocity="4.9"/>
+    <dynamics damping="3.0" friction="0.0"/>
+  </joint>
+  <joint name="RKneePitch" type="revolute">
+    <origin rpy="0.0 0.0 0.0" xyz="-0.039 -0.0641 -0.0607"/>
+    <axis xyz="0.0 1.0 0.0"/>
+    <parent link="RThighLowLeg"/>
+    <child link="RLowLeg"/>
+    <limit effort="200.0" lower="0.0" upper="2.44346095279" velocity="5.5"/>
+    <dynamics damping="3.0" friction="0.0"/>
+  </joint>
+  <joint name="RAnklePitch" type="revolute">
+    <origin rpy="0.0 0.0 0.0" xyz="0.039 0.0616 -0.425294"/>
+    <axis xyz="0.0 1.0 0.0"/>
+    <parent link="RLowLeg"/>
+    <child link="RFootmot"/>
+    <limit effort="200.0" lower="-0.872664625997" upper="0.698131700798" velocity="4.9"/>
+    <dynamics damping="0.1" friction="0.0"/>
+  </joint>
+  <joint name="RAnkleRoll" type="revolute">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+    <axis xyz="1.0 0.0 0.0"/>
+    <parent link="RFootmot"/>
+    <child link="RFoot"/>
+    <limit effort="60.0" lower="-0.261799387799" upper="0.261799387799" velocity="3.2"/>
+    <dynamics damping="3.0" friction="0.0"/>
+  </joint>
+  <link name="DWL">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="0.039412845 0.00031221526 0.0056331027"/>
+      <mass value="0.74182685"/>
+      <inertia ixx="0.00094437073" ixy="4.8511769e-06" ixz="0.00010757639" iyy="0.0015988107" iyz="-1.104754e-05" izz="0.0015042997"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/TorsoRoll.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin rpy="-3.1415458624 0.621364131422 -3.14144692285" xyz="-0.0429697 -1.10305e-07 0.028763955"/>
+      <geometry>
+        <cylinder length="0.0658650498323" radius="0.0603821"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-3.1415458624 0.621364131422 -3.14144692285" xyz="-0.062141 -0.000001 0.055541"/>
+      <geometry>
+        <sphere radius="0.0603821"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-3.1415458624 0.621364131422 -3.14144692285" xyz="-0.023798 0.000001 0.001987"/>
+      <geometry>
+        <sphere radius="0.0603821"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="DWLExt">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="1.5386429e-06 5.166843e-05 0.095210134"/>
+      <mass value="0.96910635"/>
+      <inertia ixx="0.003041487" ixy="-2.8413688e-06" ixz="9.6851038e-05" iyy="0.0030465319" iyz="-8.8025302e-06" izz="0.0015978729"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/TorsoRollExt.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <origin rpy="0.00122924209497 0.00940346844785 5.77961294385e-06" xyz="0.0005145859 -6.7006352e-05 0.06452515"/>
+      <geometry>
+        <cylinder length="0.10846457741" radius="0.059006"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0.00122924209497 0.00940346844785 5.77961294385e-06" xyz="0.000005 -0.000000 0.010295"/>
+      <geometry>
+        <sphere radius="0.059006"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0.00122924209497 0.00940346844785 5.77961294385e-06" xyz="0.001025 -0.000134 0.118755"/>
+      <geometry>
+        <sphere radius="0.059006"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="DWYTorso">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="-0.059646212 0.0014305062 0.042741527"/>
+      <mass value="12.512295"/>
+      <inertia ixx="0.21021617" ixy="-0.00015527214" ixz="-0.050216602" iyy="0.19982996" iyz="-0.00029204792" izz="0.14025094"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/Chest.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin rpy="-1.56990183621 -0.00385969868751 0.00385624777512" xyz="-0.0417117 4.9e-05 0.04395835"/>
+      <geometry>
+        <cylinder length="0.0589166624181" radius="0.227763"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-1.56990183621 -0.00385969868751 0.00385624777512" xyz="-0.041598 -0.029409 0.043932"/>
+      <geometry>
+        <sphere radius="0.227763"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-1.56990183621 -0.00385969868751 0.00385624777512" xyz="-0.041825 0.029507 0.043985"/>
+      <geometry>
+        <sphere radius="0.227763"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="torso"/>
+  <joint name="WaistLat" type="revolute">
+    <origin rpy="0.0 0.0 0.0" xyz="0.012 0.0 0.0"/>
+    <axis xyz="1.0 0.0 0.0"/>
+    <parent link="Waist"/>
+    <child link="DWL"/>
+    <limit effort="140.0" lower="-0.523598775598" upper="0.523598775598" velocity="7.4"/>
+    <dynamics damping="3.0" friction="0.0"/>
+  </joint>
+  <joint name="WaistFixed" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="-0.0540957 0.0 0.0635"/>
+    <parent link="DWL"/>
+    <child link="DWLExt"/>
+  </joint>
+  <joint name="WaistYaw" type="revolute">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.16815"/>
+    <axis xyz="0.0 0.0 1.0"/>
+    <parent link="DWLExt"/>
+    <child link="DWYTorso"/>
+    <limit effort="120.0" lower="-1.74532925199" upper="1.74532925199" velocity="6.283"/>
+    <dynamics damping="3.0" friction="0.0"/>
+  </joint>
+  <joint name="torso_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.155126"/>
+    <parent link="DWYTorso"/>
+    <child link="torso"/>
+  </joint>
+  <link name="RShp">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="-0.0074457212 -0.03410796 0.00010978102"/>
+      <mass value="1.9628675"/>
+      <inertia ixx="0.0053547717" ixy="-0.00036428926" ixz="1.5089568e-05" iyy="0.0033923328" iyz="-5.5692312e-05" izz="0.0068921413"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/ShoulderPitch.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <origin rpy="1.69033471763 1.45264918315 1.5721974565" xyz="0.017831412 -0.05324115 2.3169e-05"/>
+      <geometry>
+        <cylinder length="0.0373976849456" radius="0.0698859"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="1.69033471763 1.45264918315 1.5721974565" xyz="-0.000737 -0.051053 0.000286"/>
+      <geometry>
+        <sphere radius="0.0698859"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="1.69033471763 1.45264918315 1.5721974565" xyz="0.036400 -0.055430 -0.000240"/>
+      <geometry>
+        <sphere radius="0.0698859"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="RShr">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="0.058142302 -5.7450803e-05 -0.077477683"/>
+      <mass value="1.8595811"/>
+      <inertia ixx="0.013776643" ixy="-3.7788675e-05" ixz="0.0037690171" iyy="0.015677464" iyz="9.4893549e-06" izz="0.0046317657"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/ShoulderRoll.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin rpy="-3.14158140766 0.430137396273 -3.14154117236" xyz="0.0637382 -4.0386e-07 -0.06435918"/>
+      <geometry>
+        <cylinder length="0.127992690725" radius="0.0700645"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-3.14158140766 0.430137396273 -3.14154117236" xyz="0.037052 -0.000001 -0.006192"/>
+      <geometry>
+        <sphere radius="0.0700645"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-3.14158140766 0.430137396273 -3.14154117236" xyz="0.090424 0.000000 -0.122526"/>
+      <geometry>
+        <sphere radius="0.0700645"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="RShy">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="0.014625194 -0.0008172672 -0.028333545"/>
+      <mass value="1.6678109"/>
+      <inertia ixx="0.0064480435" ixy="0.00015639093" ixz="0.0012205359" iyy="0.0073372077" iyz="-8.9941532e-05" izz="0.0036738448"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/ShoulderYaw.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <origin rpy="-3.00242380361 0.242909821838 -2.10390753657" xyz="0.007307538565 0.004091138465 -0.03662884"/>
+      <geometry>
+        <cylinder length="0.060822526466" radius="0.0896121"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-3.00242380361 0.242909821838 -2.10390753657" xyz="-0.000007 -0.000004 -0.007396"/>
+      <geometry>
+        <sphere radius="0.0896121"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-3.00242380361 0.242909821838 -2.10390753657" xyz="0.014622 0.008186 -0.065862"/>
+      <geometry>
+        <sphere radius="0.0896121"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="RElb">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="-0.0076833067 0.040302205 -0.043492779"/>
+      <mass value="1.3157289"/>
+      <inertia ixx="0.004330394" ixy="0.00011737391" ixz="-0.00041923199" iyy="0.0038539919" iyz="0.00079573038" izz="0.0017594689"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/Elbow.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin rpy="0.338546052476 0.173378149403 0.0297040701886" xyz="-0.00746020465 0.0408499 -0.0404292381"/>
+      <geometry>
+        <cylinder length="0.0871341857294" radius="0.0600429"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0.338546052476 0.173378149403 0.0297040701886" xyz="-0.014976 0.055102 -0.080907"/>
+      <geometry>
+        <sphere radius="0.0600429"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0.338546052476 0.173378149403 0.0297040701886" xyz="0.000056 0.026598 0.000049"/>
+      <geometry>
+        <sphere radius="0.0600429"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="RForearm">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="-0.00011079615 -0.011590836 -0.07816026"/>
+      <mass value="1.4908547"/>
+      <inertia ixx="0.0085692128" ixy="-1.7856252e-05" ixz="1.9379365e-05" iyy="0.0077454159" iyz="0.00032860094" izz="0.0027441921"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/Forearm.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <origin rpy="0.19504999679 0.000108974174582 1.06615287086e-05" xyz="-3.798436e-06 -0.00576208 -0.082271"/>
+      <geometry>
+        <cylinder length="0.0843473974771" radius="0.0804108"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0.19504999679 0.000108974174582 1.06615287086e-05" xyz="-0.000008 0.002412 -0.123645"/>
+      <geometry>
+        <sphere radius="0.0804108"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0.19504999679 0.000108974174582 1.06615287086e-05" xyz="0.000001 -0.013936 -0.040897"/>
+      <geometry>
+        <sphere radius="0.0804108"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="RWrMot2">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="-4.6502396e-06 0.038014094 -0.069926878"/>
+      <mass value="1.1263612"/>
+      <inertia ixx="0.0051871784" ixy="-2.724437e-05" ixz="2.2833496e-06" iyy="0.0048037789" iyz="0.00072165653" izz="0.0012771388"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/ForearmPitch.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin rpy="0.155924559424 -0.000643096653781 -5.02391105884e-05" xyz="1.10955e-06 0.04345545 -0.05749733"/>
+      <geometry>
+        <cylinder length="0.114251418714" radius="0.0583263"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0.155924559424 -0.000643096653781 -5.02391105884e-05" xyz="0.000038 0.052327 -0.113930"/>
+      <geometry>
+        <sphere radius="0.0583263"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0.155924559424 -0.000643096653781 -5.02391105884e-05" xyz="-0.000036 0.034584 -0.001065"/>
+      <geometry>
+        <sphere radius="0.0583263"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="RWrMot3">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.03127057"/>
+      <mass value="0.27966428"/>
+      <inertia ixx="0.00014415192" ixy="9.8651826e-08" ixz="0.0" iyy="0.0001441701" iyz="0.0" izz="6.0500616e-05"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/ForearmYaw.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <origin rpy="1.57079632679 -0.262733020835 -0.262733020835" xyz="0.0 0.0 0.0101335"/>
+      <geometry>
+        <cylinder length="0.00916730749359" radius="0.0207073"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="1.57079632679 -0.262733020835 -0.262733020835" xyz="0.001190 0.004426 0.010133"/>
+      <geometry>
+        <sphere radius="0.0207073"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="1.57079632679 -0.262733020835 -0.262733020835" xyz="-0.001190 -0.004426 0.010134"/>
+      <geometry>
+        <sphere radius="0.0207073"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="r_wrist">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="8.2161929e-05 -0.0026334189 -0.016465877"/>
+      <mass value="0.37827821"/>
+      <inertia ixx="0.00023321716" ixy="-2.3681435e-06" ixz="-1.8039102e-06" iyy="0.00020626291" iyz="-3.158829e-05" izz="0.00027399881"/>
+    </inertial>
+    <visual>
+      <origin rpy="3.14159265359 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/Wrist.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin rpy="2.70790736799 -1.7440880556e-07 3.84233946897e-08" xyz="-5.947637e-09 -0.013199979631 -0.019569765"/>
+      <geometry>
+        <cylinder length="0.0628232385677" radius="0.0468649"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="2.70790736799 -1.7440880556e-07 3.84233946897e-08" xyz="-0.000000 -0.000000 0.008934"/>
+      <geometry>
+        <sphere radius="0.0468649"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="2.70790736799 -1.7440880556e-07 3.84233946897e-08" xyz="-0.000000 -0.026400 -0.048073"/>
+      <geometry>
+        <sphere radius="0.0468649"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="RShSag" type="revolute">
+    <origin rpy="-0.174533 0.0 0.5235988" xyz="0.0457475 -0.169137 0.155126"/>
+    <axis xyz="0.0 1.0 0.0"/>
+    <parent link="DWYTorso"/>
+    <child link="RShp"/>
+    <limit effort="140.0" lower="-3.359" upper="1.606" velocity="6.283"/>
+    <dynamics damping="3.0" friction="0.0"/>
+  </joint>
+  <joint name="RShLat" type="revolute">
+    <origin rpy="0.1745327 0.0 0.0" xyz="-0.09015 -0.062 0.0"/>
+    <axis xyz="1.0 0.0 0.0"/>
+    <parent link="RShp"/>
+    <child link="RShr"/>
+    <limit effort="140.0" lower="-3.43" upper="0.0" velocity="6.283"/>
+    <dynamics damping="3.0" friction="0.0"/>
+  </joint>
+  <joint name="RShYaw" type="revolute">
+    <origin rpy="0.0 0.0 0.0" xyz="0.09015 0.0 -0.21815"/>
+    <axis xyz="0.0 0.0 1.0"/>
+    <parent link="RShr"/>
+    <child link="RShy"/>
+    <limit effort="120.0" lower="-2.55" upper="2.55" velocity="6.283"/>
+    <dynamics damping="3.0" friction="0.0"/>
+  </joint>
+  <joint name="RElbj" type="revolute">
+    <origin rpy="0.0 0.0 0.0" xyz="0.045 -0.05515 -0.074"/>
+    <axis xyz="0.0 1.0 0.0"/>
+    <parent link="RShy"/>
+    <child link="RElb"/>
+    <limit effort="120.0" lower="-2.488" upper="0.292" velocity="6.283"/>
+    <dynamics damping="3.0" friction="0.0"/>
+  </joint>
+  <joint name="RForearmPlate" type="revolute">
+    <origin rpy="0.0 0.0 0.0" xyz="-0.015 0.05515 -0.095"/>
+    <axis xyz="0.0 0.0 1.0"/>
+    <parent link="RElb"/>
+    <child link="RForearm"/>
+    <limit effort="35.0" lower="-2.55" upper="2.55" velocity="6.283"/>
+    <dynamics damping="0.03" friction="0.0"/>
+  </joint>
+  <joint name="RWrj1" type="revolute">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 -0.049 -0.156"/>
+    <axis xyz="0.0 1.0 0.0"/>
+    <parent link="RForearm"/>
+    <child link="RWrMot2"/>
+    <limit effort="35.0" lower="-1.542" upper="1.508" velocity="6.283"/>
+    <dynamics damping="0.03" friction="0.0"/>
+  </joint>
+  <joint name="RWrj2" type="revolute">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.049 -0.174"/>
+    <axis xyz="0.0 0.0 1.0"/>
+    <parent link="RWrMot2"/>
+    <child link="RWrMot3"/>
+    <limit effort="20.0" lower="-2.55" upper="2.55" velocity="6.283"/>
+    <dynamics damping="0.03" friction="0.0"/>
+  </joint>
+  <joint name="r_wrist_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+    <parent link="RWrMot3"/>
+    <child link="r_wrist"/>
+  </joint>
+  <link name="LShp">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="-0.0074457212 0.03410796 0.00010978102"/>
+      <mass value="1.9628675"/>
+      <inertia ixx="0.0053547717" ixy="0.00036428926" ixz="1.5089568e-05" iyy="0.0033923328" iyz="5.5692312e-05" izz="0.0068921413"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/ShoulderPitch.STL" scale="0.001 -0.001 0.001"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <origin rpy="-1.69033471763 1.45264918315 -1.5721974565" xyz="0.017831412 0.05324115 2.3169e-05"/>
+      <geometry>
+        <cylinder length="0.0373976849456" radius="0.0698859"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-1.69033471763 1.45264918315 -1.5721974565" xyz="-0.000737 0.051053 0.000286"/>
+      <geometry>
+        <sphere radius="0.0698859"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-1.69033471763 1.45264918315 -1.5721974565" xyz="0.036400 0.055430 -0.000240"/>
+      <geometry>
+        <sphere radius="0.0698859"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="LShr">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="0.058142302 5.7450803e-05 -0.077477683"/>
+      <mass value="1.8595811"/>
+      <inertia ixx="0.013776643" ixy="3.7788675e-05" ixz="0.0037690171" iyy="0.015677464" iyz="-9.4893549e-06" izz="0.0046317657"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/ShoulderRoll.STL" scale="0.001 -0.001 0.001"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin rpy="3.14158140766 0.430137396273 3.14154117236" xyz="0.0637382 4.0386e-07 -0.06435918"/>
+      <geometry>
+        <cylinder length="0.127992690725" radius="0.0700645"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="3.14158140766 0.430137396273 3.14154117236" xyz="0.037052 0.000001 -0.006192"/>
+      <geometry>
+        <sphere radius="0.0700645"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="3.14158140766 0.430137396273 3.14154117236" xyz="0.090424 -0.000000 -0.122526"/>
+      <geometry>
+        <sphere radius="0.0700645"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="LShy">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="0.014625194 0.0008172672 -0.028333545"/>
+      <mass value="1.6678109"/>
+      <inertia ixx="0.0064480435" ixy="-0.00015639093" ixz="0.0012205359" iyy="0.0073372077" iyz="8.9941532e-05" izz="0.0036738448"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/ShoulderYaw.STL" scale="0.001 -0.001 0.001"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <origin rpy="3.00242380361 0.242909821838 2.10390753657" xyz="0.007307538565 -0.004091138465 -0.03662884"/>
+      <geometry>
+        <cylinder length="0.060822526466" radius="0.0896121"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="3.00242380361 0.242909821838 2.10390753657" xyz="-0.000007 0.000004 -0.007396"/>
+      <geometry>
+        <sphere radius="0.0896121"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="3.00242380361 0.242909821838 2.10390753657" xyz="0.014622 -0.008186 -0.065862"/>
+      <geometry>
+        <sphere radius="0.0896121"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="LElb">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="-0.0076833067 -0.040302205 -0.043492779"/>
+      <mass value="1.3157289"/>
+      <inertia ixx="0.004330394" ixy="-0.00011737391" ixz="-0.00041923199" iyy="0.0038539919" iyz="-0.00079573038" izz="0.0017594689"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/Elbow.STL" scale="0.001 -0.001 0.001"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin rpy="-0.338546052476 0.173378149403 -0.0297040701886" xyz="-0.00746020465 -0.0408499 -0.0404292381"/>
+      <geometry>
+        <cylinder length="0.0871341857294" radius="0.0600429"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-0.338546052476 0.173378149403 -0.0297040701886" xyz="-0.014976 -0.055102 -0.080907"/>
+      <geometry>
+        <sphere radius="0.0600429"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-0.338546052476 0.173378149403 -0.0297040701886" xyz="0.000056 -0.026598 0.000049"/>
+      <geometry>
+        <sphere radius="0.0600429"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="LForearm">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="-0.00011079615 0.011590836 -0.07816026"/>
+      <mass value="1.4908547"/>
+      <inertia ixx="0.0085692128" ixy="1.7856252e-05" ixz="1.9379365e-05" iyy="0.0077454159" iyz="-0.00032860094" izz="0.0027441921"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/Forearm.STL" scale="0.001 -0.001 0.001"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <origin rpy="-0.19504999679 0.000108974174582 -1.06615287086e-05" xyz="-3.798436e-06 0.00576208 -0.082271"/>
+      <geometry>
+        <cylinder length="0.0843473974771" radius="0.0804108"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-0.19504999679 0.000108974174582 -1.06615287086e-05" xyz="-0.000008 -0.002412 -0.123645"/>
+      <geometry>
+        <sphere radius="0.0804108"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-0.19504999679 0.000108974174582 -1.06615287086e-05" xyz="0.000001 0.013936 -0.040897"/>
+      <geometry>
+        <sphere radius="0.0804108"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="LWrMot2">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="-4.6502396e-06 -0.038014094 -0.069926878"/>
+      <mass value="1.1263612"/>
+      <inertia ixx="0.0051871784" ixy="2.724437e-05" ixz="2.2833496e-06" iyy="0.0048037789" iyz="-0.00072165653" izz="0.0012771388"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/ForearmPitch.STL" scale="0.001 -0.001 0.001"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin rpy="-0.155924559424 -0.000643096653781 5.02391105884e-05" xyz="1.10955e-06 -0.04345545 -0.05749733"/>
+      <geometry>
+        <cylinder length="0.114251418714" radius="0.0583263"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-0.155924559424 -0.000643096653781 5.02391105884e-05" xyz="0.000038 -0.052327 -0.113930"/>
+      <geometry>
+        <sphere radius="0.0583263"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-0.155924559424 -0.000643096653781 5.02391105884e-05" xyz="-0.000036 -0.034584 -0.001065"/>
+      <geometry>
+        <sphere radius="0.0583263"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="LWrMot3">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.03127057"/>
+      <mass value="0.27966428"/>
+      <inertia ixx="0.00014415192" ixy="9.8651826e-08" ixz="0.0" iyy="0.0001441701" iyz="0.0" izz="6.0500616e-05"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/ForearmYaw.STL" scale="0.001 -0.001 0.001"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <origin rpy="-1.57079632679 -0.262733020835 0.262733020835" xyz="0.0 0.0 0.0101335"/>
+      <geometry>
+        <cylinder length="0.00916730749359" radius="0.0207073"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-1.57079632679 -0.262733020835 0.262733020835" xyz="0.001190 -0.004426 0.010133"/>
+      <geometry>
+        <sphere radius="0.0207073"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-1.57079632679 -0.262733020835 0.262733020835" xyz="-0.001190 0.004426 0.010134"/>
+      <geometry>
+        <sphere radius="0.0207073"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="l_wrist">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="8.2161929e-05 0.0026334189 -0.016465877"/>
+      <mass value="0.37827821"/>
+      <inertia ixx="0.00023321716" ixy="2.3681435e-06" ixz="-1.8039102e-06" iyy="0.00020626291" iyz="3.158829e-05" izz="0.00027399881"/>
+    </inertial>
+    <visual>
+      <origin rpy="3.14159265359 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/Wrist.STL" scale="0.001 -0.001 0.001"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin rpy="-2.70790736799 -1.7440880556e-07 -3.84233946898e-08" xyz="-5.947637e-09 0.013199979631 -0.019569765"/>
+      <geometry>
+        <cylinder length="0.0628232385677" radius="0.0468649"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-2.70790736799 -1.7440880556e-07 -3.84233946898e-08" xyz="-0.000000 0.000000 0.008934"/>
+      <geometry>
+        <sphere radius="0.0468649"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-2.70790736799 -1.7440880556e-07 -3.84233946898e-08" xyz="-0.000000 0.026400 -0.048073"/>
+      <geometry>
+        <sphere radius="0.0468649"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="LShSag" type="revolute">
+    <origin rpy="0.174533 0.0 -0.5235988" xyz="0.0457475 0.169137 0.155126"/>
+    <axis xyz="0.0 1.0 0.0"/>
+    <parent link="DWYTorso"/>
+    <child link="LShp"/>
+    <limit effort="140.0" lower="-3.352" upper="1.603" velocity="6.283"/>
+    <dynamics damping="3.0" friction="0.0"/>
+  </joint>
+  <joint name="LShLat" type="revolute">
+    <origin rpy="-0.1745327 0.0 0.0" xyz="-0.09015 0.062 0.0"/>
+    <axis xyz="1.0 0.0 0.0"/>
+    <parent link="LShp"/>
+    <child link="LShr"/>
+    <limit effort="140.0" lower="0.0" upper="3.517" velocity="6.283"/>
+    <dynamics damping="3.0" friction="0.0"/>
+  </joint>
+  <joint name="LShYaw" type="revolute">
+    <origin rpy="0.0 0.0 0.0" xyz="0.09015 0.0 -0.21815"/>
+    <axis xyz="0.0 0.0 1.0"/>
+    <parent link="LShr"/>
+    <child link="LShy"/>
+    <limit effort="120.0" lower="-2.55" upper="2.55" velocity="6.283"/>
+    <dynamics damping="3.0" friction="0.0"/>
+  </joint>
+  <joint name="LElbj" type="revolute">
+    <origin rpy="0.0 0.0 0.0" xyz="0.045 0.05515 -0.074"/>
+    <axis xyz="0.0 1.0 0.0"/>
+    <parent link="LShy"/>
+    <child link="LElb"/>
+    <limit effort="120.0" lower="-2.492" upper="0.298" velocity="6.283"/>
+    <dynamics damping="3.0" friction="0.0"/>
+  </joint>
+  <joint name="LForearmPlate" type="revolute">
+    <origin rpy="0.0 0.0 0.0" xyz="-0.015 -0.05515 -0.095"/>
+    <axis xyz="0.0 0.0 1.0"/>
+    <parent link="LElb"/>
+    <child link="LForearm"/>
+    <limit effort="35.0" lower="-2.55" upper="2.55" velocity="6.283"/>
+    <dynamics damping="0.03" friction="0.0"/>
+  </joint>
+  <joint name="LWrj1" type="revolute">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.049 -0.156"/>
+    <axis xyz="0.0 1.0 0.0"/>
+    <parent link="LForearm"/>
+    <child link="LWrMot2"/>
+    <limit effort="35.0" lower="-1.562" upper="1.478" velocity="6.283"/>
+    <dynamics damping="0.03" friction="0.0"/>
+  </joint>
+  <joint name="LWrj2" type="revolute">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 -0.049 -0.174"/>
+    <axis xyz="0.0 0.0 1.0"/>
+    <parent link="LWrMot2"/>
+    <child link="LWrMot3"/>
+    <limit effort="20.0" lower="-2.55" upper="2.55" velocity="6.283"/>
+    <dynamics damping="0.03" friction="0.0"/>
+  </joint>
+  <joint name="l_wrist_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+    <parent link="LWrMot3"/>
+    <child link="l_wrist"/>
+  </joint>
+  <link name="Head">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="0.057448518 1.6262687e-05 0.13030019"/>
+      <mass value="1.262601"/>
+      <inertia ixx="0.0088669451" ixy="-4.5839239e-07" ixz="-0.001724017" iyy="0.011716158" iyz="-2.603154e-07" izz="0.0079021213"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/Head.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin rpy="-0.000198642361464 0.970933523641 -0.000104799577421" xyz="0.064631 -3.0435775e-06 0.132289"/>
+      <geometry>
+        <cylinder length="0.0497830738075" radius="0.139023"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-0.000198642361464 0.970933523641 -0.000104799577421" xyz="0.044085 -0.000006 0.118237"/>
+      <geometry>
+        <sphere radius="0.139023"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-0.000198642361464 0.970933523641 -0.000104799577421" xyz="0.085177 -0.000000 0.146341"/>
+      <geometry>
+        <sphere radius="0.139023"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="HeadHokuyo">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="0.054246456 -9.3963721e-06 -0.02559689"/>
+      <mass value="0.55751693"/>
+      <inertia ixx="0.0019833413" ixy="-7.2298853e-08" ixz="0.00017498835" iyy="0.0049368962" iyz="-1.1129001e-07" izz="0.0039384326"/>
+    </inertial>
+  </link>
+  <joint name="neck_frame" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.1965"/>
+    <parent link="DWYTorso"/>
+    <child link="Head"/>
+  </joint>
+  <joint name="head_roll" type="fixed">
+    <origin rpy="0.0 0.3491 0.0" xyz="0.0853 0.0 0.1506"/>
+    <parent link="Head"/>
+    <child link="HeadHokuyo"/>
+  </joint>
+  <link name="HokuyoLaser"/>
+  <joint name="HokuyoLaser_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0652577 0.0 0.0"/>
+    <parent link="HeadHokuyo"/>
+    <child link="HokuyoLaser"/>
+  </joint>
+  <link name="RSoftHand"/>
+  <link name="TCP_R"/>
+  <link name="RSoftHandLink">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0020955992 0.0043009755 -0.060792229"/>
+      <mass value="1.4"/>
+      <inertia ixx="0.0046340021" ixy="-5.6301252e-05" ixz="0.00021001241" iyy="0.0052222303" iyz="0.00020916976" izz="0.0013961628"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/SoftHandOpen2.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="grey"/>
+    </visual>
+    <collision>
+      <origin rpy="-2.89499147964 0.211295821994 -1.4155549417" xyz="0.0068289476 0.0078072758 -0.1256931"/>
+      <geometry>
+        <cylinder length="0.0653101397381" radius="0.105258"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-2.89499147964 0.211295821994 -1.4155549417" xyz="-0.000020 0.000013 -0.094730"/>
+      <geometry>
+        <sphere radius="0.105258"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-2.89499147964 0.211295821994 -1.4155549417" xyz="0.013678 0.015601 -0.156656"/>
+      <geometry>
+        <sphere radius="0.105258"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="r_handj" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 -0.0395"/>
+    <parent link="r_wrist"/>
+    <child link="RSoftHandLink"/>
+  </joint>
+  <joint name="r_handj2" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.041 -0.1005"/>
+    <parent link="RSoftHandLink"/>
+    <child link="RSoftHand"/>
+  </joint>
+  <joint name="TCP_Rjoint" type="fixed">
+    <origin rpy="-1.57079632679 0.0 0.0" xyz="0.0 0.0 0.0"/>
+    <parent link="RSoftHand"/>
+    <child link="TCP_R"/>
+  </joint>
+  <link name="LSoftHand"/>
+  <link name="TCP_L"/>
+  <link name="LSoftHandLink">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0020955992 -0.0043009755 -0.060792229"/>
+      <mass value="1.4"/>
+      <inertia ixx="0.0046340021" ixy="5.6301252e-05" ixz="0.00021001241" iyy="0.0052222303" iyz="-0.00020916976" izz="0.0013961628"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://cogimon_urdf/meshes/SoftHandOpen2.STL" scale="0.001 -0.001 0.001"/>
+      </geometry>
+      <material name="grey"/>
+    </visual>
+    <collision>
+      <origin rpy="2.89499147964 0.211295821994 1.4155549417" xyz="0.0068289476 -0.0078072758 -0.1256931"/>
+      <geometry>
+        <cylinder length="0.0653101397381" radius="0.105258"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="2.89499147964 0.211295821994 1.4155549417" xyz="-0.000020 -0.000013 -0.094730"/>
+      <geometry>
+        <sphere radius="0.105258"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="2.89499147964 0.211295821994 1.4155549417" xyz="0.013678 -0.015601 -0.156656"/>
+      <geometry>
+        <sphere radius="0.105258"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="l_handj" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 -0.0395"/>
+    <parent link="l_wrist"/>
+    <child link="LSoftHandLink"/>
+  </joint>
+  <joint name="l_handj2" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 -0.041 -0.1005"/>
+    <parent link="LSoftHandLink"/>
+    <child link="LSoftHand"/>
+  </joint>
+  <joint name="TCP_Ljoint" type="fixed">
+    <origin rpy="1.57079632679 3.14159265359 0.0" xyz="0.0 0.0 0.0"/>
+    <parent link="LSoftHand"/>
+    <child link="TCP_L"/>
+  </joint>
+  <link name="l_ankle"/>
+  <link name="l_sole"/>
+  <link name="l_toe"/>
+  <link name="l_heel"/>
+  <link name="l_leg_ft"/>
+  <joint name="l_leg_ft_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 -0.035"/>
+    <parent link="LFoot"/>
+    <child link="l_leg_ft"/>
+  </joint>
+  <joint name="l_ankle_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+    <parent link="LFoot"/>
+    <child link="l_ankle"/>
+  </joint>
+  <joint name="l_sole_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 -0.069"/>
+    <parent link="l_ankle"/>
+    <child link="l_sole"/>
+  </joint>
+  <joint name="l_toe_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.107 0.0 0.0"/>
+    <parent link="l_sole"/>
+    <child link="l_toe"/>
+  </joint>
+  <joint name="l_heel_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="-0.1035 0.0 0.0"/>
+    <parent link="l_sole"/>
+    <child link="l_heel"/>
+  </joint>
+  <link name="l_foot_upper_right_link"/>
+  <joint name="l_foot_upper_right_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.107 -0.055 0.0"/>
+    <parent link="l_sole"/>
+    <child link="l_foot_upper_right_link"/>
+  </joint>
+  <link name="l_foot_upper_left_link"/>
+  <joint name="l_foot_upper_left_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.107 0.055 0.0"/>
+    <parent link="l_sole"/>
+    <child link="l_foot_upper_left_link"/>
+  </joint>
+  <link name="l_foot_lower_right_link"/>
+  <joint name="l_foot_lower_right_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="-0.1035 -0.055 0.0"/>
+    <parent link="l_sole"/>
+    <child link="l_foot_lower_right_link"/>
+  </joint>
+  <link name="l_foot_lower_left_link"/>
+  <joint name="l_foot_lower_left_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="-0.1035 0.055 0.0"/>
+    <parent link="l_sole"/>
+    <child link="l_foot_lower_left_link"/>
+  </joint>
+  <link name="r_ankle"/>
+  <link name="r_sole"/>
+  <link name="r_toe"/>
+  <link name="r_heel"/>
+  <link name="r_leg_ft"/>
+  <joint name="r_leg_ft_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 -0.035"/>
+    <parent link="RFoot"/>
+    <child link="r_leg_ft"/>
+  </joint>
+  <joint name="r_ankle_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+    <parent link="RFoot"/>
+    <child link="r_ankle"/>
+  </joint>
+  <joint name="r_sole_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 -0.069"/>
+    <parent link="r_ankle"/>
+    <child link="r_sole"/>
+  </joint>
+  <joint name="r_toe_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.107 0.0 0.0"/>
+    <parent link="r_sole"/>
+    <child link="r_toe"/>
+  </joint>
+  <joint name="r_heel_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="-0.1035 0.0 0.0"/>
+    <parent link="r_sole"/>
+    <child link="r_heel"/>
+  </joint>
+  <link name="r_foot_upper_right_link"/>
+  <joint name="r_foot_upper_right_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.107 -0.055 0.0"/>
+    <parent link="r_sole"/>
+    <child link="r_foot_upper_right_link"/>
+  </joint>
+  <link name="r_foot_upper_left_link"/>
+  <joint name="r_foot_upper_left_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.107 0.055 0.0"/>
+    <parent link="r_sole"/>
+    <child link="r_foot_upper_left_link"/>
+  </joint>
+  <link name="r_foot_lower_right_link"/>
+  <joint name="r_foot_lower_right_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="-0.1035 -0.055 0.0"/>
+    <parent link="r_sole"/>
+    <child link="r_foot_lower_right_link"/>
+  </joint>
+  <link name="r_foot_lower_left_link"/>
+  <joint name="r_foot_lower_left_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="-0.1035 0.055 0.0"/>
+    <parent link="r_sole"/>
+    <child link="r_foot_lower_left_link"/>
+  </joint>
+  <link name="r_arm_ft"/>
+  <joint name="r_arm_ft_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 -0.02"/>
+    <parent link="RWrMot3"/>
+    <child link="r_arm_ft"/>
+  </joint>
+  <link name="l_arm_ft"/>
+  <joint name="l_arm_ft_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 -0.02"/>
+    <parent link="LWrMot3"/>
+    <child link="l_arm_ft"/>
+  </joint>
+  <link name="world"/>
+  <joint name="reference" type="floating">
+    <parent link="world"/>
+    <child link="base_link"/>
+  </joint>
+</robot>

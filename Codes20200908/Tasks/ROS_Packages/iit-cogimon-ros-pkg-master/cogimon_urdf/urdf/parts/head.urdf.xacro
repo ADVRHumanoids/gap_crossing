@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+<xacro:if value="${COGIMON_HEAD}" >
+
+<!-- LINKS -->
+<link name ="Head">
+    <inertial>
+      <origin xyz="${5.7448518e+01*mmTom} ${1.6262687e-02*mmTom} ${1.3030019e+02*mmTom} " rpy="0 0 0"/>
+      <mass value="1.2626010"/>
+      <inertia ixx="${8.8669451e+03*mm2Tom2}"  ixy="${-4.5839239e-01*mm2Tom2}"  ixz="${-1.7240170e+03*mm2Tom2}" iyy="${1.1716158e+04*mm2Tom2}" iyz="${-2.6031540e-01*mm2Tom2}" izz="${7.9021213e+03*mm2Tom2}" />
+    </inertial>
+    <visual>
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <geometry name="Head_visual">
+        <mesh filename="package://cogimon_urdf/meshes/Head.stl" scale="${mmTom} ${mmTom} ${mmTom}" />
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <geometry name="Head_collision">
+        <mesh filename="package://cogimon_urdf/meshes/simple/Head.stl" scale="${mmTom} ${mmTom} ${mmTom}" />
+      </geometry>             
+    </collision>
+</link>
+
+<link name ="HeadHokuyo"> 
+    <inertial>
+      <origin xyz="${5.4246456e+01*mmTom} ${-9.3963721e-03*mmTom} ${-2.5596890e+01*mmTom} " rpy="0 0 0"/>
+      <mass value="5.5751693e-01"/>
+      <inertia ixx="${1.9833413e+03*mm2Tom2}"  ixy="${-7.2298853e-02*mm2Tom2}"  ixz="${1.7498835e+02*mm2Tom2}" iyy="${4.9368962e+03*mm2Tom2}" iyz="${-1.1129001e-01*mm2Tom2}" izz="${3.9384326e+03*mm2Tom2}" />
+    </inertial>
+</link>
+
+
+<!-- JOINTS -->
+<joint name="neck_frame" type="fixed">
+    <parent link="DWYTorso"/>
+    <child link="Head"/>
+    <origin xyz="0.0 0.0 ${196.5*mmTom}" rpy="0 0 0" />
+</joint>
+
+<xacro:if value="${COGIMON_LASER_FIXED}">
+
+  <joint name="head_roll" type="fixed">
+    <parent link="Head"/>
+    <child link="HeadHokuyo"/>
+    <origin xyz="0.0853 0.0 0.1506" rpy="0 0.3491 0" />
+  </joint>
+
+</xacro:if>
+
+<xacro:unless value="${COGIMON_LASER_FIXED}">
+
+  <joint name="head_roll" type="revolute">
+    <parent link="Head"/>
+    <child link="HeadHokuyo"/>
+    <origin xyz="0.0853 0.0 0.1506" rpy="0 0.3491 0" />
+    <axis xyz="1 0 0" />
+    <limit velocity="6.283" effort="20" lower="-100." upper="100." /> 
+    <dynamics friction="0" damping="3.0"/>
+  </joint>
+
+</xacro:unless>
+
+<link name="HokuyoLaser"/>
+
+<joint name="HokuyoLaser_joint" type="fixed">
+    <parent link="HeadHokuyo"/>
+    <child link="HokuyoLaser"/>
+    <origin xyz="${65.2577*mmTom} 0.0 0.0" rpy="0 0 0" />
+  </joint>
+
+
+</xacro:if>
+</robot>

@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+<gazebo reference="Waist">
+  <material>Gazebo/DarkGrey</material>
+</gazebo>
+
+<xacro:if value="${COGIMON_RIGHT_LEG}" >
+<gazebo reference="RHipMot">
+  <material>Gazebo/Green</material>
+</gazebo> 
+<gazebo reference="RThighUpLeg">
+  <material>Gazebo/DarkGrey</material>
+</gazebo>
+<gazebo reference="RThighLowLeg">
+  <material>Gazebo/Green</material>
+</gazebo>
+<gazebo reference="RLowLeg">
+  <material>Gazebo/DarkGrey</material>
+</gazebo>
+<gazebo reference="RFootmot">
+  <material>Gazebo/DarkGrey</material>
+</gazebo>
+<gazebo reference="RFoot">
+  <material>Gazebo/DarkGrey</material>
+</gazebo>
+</xacro:if> 
+
+<xacro:if value="${COGIMON_LEFT_LEG}" >
+<gazebo reference="LHipMot">
+  <material>Gazebo/Green</material>
+</gazebo>
+<gazebo reference="LThighUpLeg">
+  <material>Gazebo/DarkGrey</material>
+</gazebo>
+<gazebo reference="LThighLowLeg">
+  <material>Gazebo/Green</material>
+</gazebo>
+<gazebo reference="LLowLeg">
+  <material>Gazebo/DarkGrey</material>
+</gazebo>
+<gazebo reference="LFootmot">
+  <material>Gazebo/DarkGrey</material>
+</gazebo>
+<gazebo reference="LFoot">
+  <material>Gazebo/DarkGrey</material>
+</gazebo>
+</xacro:if> 
+
+<xacro:if value="${COGIMON_TORSO}">
+<gazebo reference="DWL">
+  <material>Gazebo/DarkGrey</material>
+</gazebo>
+
+<xacro:if value="${COGIMON_PENNACCHIO}">
+<gazebo reference="pennacchio">
+  <material>Gazebo/DarkGrey</material>
+</gazebo>
+</xacro:if>
+<xacro:unless value="${COGIMON_PENNACCHIO}">
+<gazebo reference="DWLExt">
+  <material>Gazebo/Green</material>
+</gazebo>
+<gazebo reference="DWYTorso">
+  <material>Gazebo/DarkGrey</material>
+</gazebo>
+</xacro:unless>
+</xacro:if>
+
+<xacro:if value="${COGIMON_LEFT_ARM}">
+<gazebo reference="LShp">
+  <material>Gazebo/Green</material>
+</gazebo>
+<gazebo reference="LShr">
+  <material>Gazebo/DarkGrey</material>
+</gazebo>
+<gazebo reference="LShy">
+  <material>Gazebo/Green</material>
+</gazebo>
+<gazebo reference="LElb">
+  <material>Gazebo/DarkGrey</material>
+</gazebo>
+<gazebo reference="LForearm">
+  <material>Gazebo/Green</material>
+</gazebo>
+<gazebo reference="LWrMot2">
+  <material>Gazebo/DarkGrey</material>
+</gazebo>
+<gazebo reference="LWrMot2">
+  <material>Gazebo/Green</material>
+</gazebo>
+</xacro:if>
+
+<xacro:if value="${COGIMON_RIGHT_ARM}">
+<gazebo reference="RShp">
+  <material>Gazebo/Green</material>
+</gazebo>
+<gazebo reference="RShr">
+  <material>Gazebo/DarkGrey</material>
+</gazebo>
+<gazebo reference="RShy">
+  <material>Gazebo/Green</material>
+</gazebo>
+<gazebo reference="RElb">
+  <material>Gazebo/DarkGrey</material>
+</gazebo>
+<gazebo reference="RForearm">
+  <material>Gazebo/Green</material>
+</gazebo>
+<gazebo reference="RWrMot2">
+  <material>Gazebo/DarkGrey</material>
+</gazebo>
+<gazebo reference="RWrMot2">
+  <material>Gazebo/Green</material>
+</gazebo>
+</xacro:if>
+</robot>

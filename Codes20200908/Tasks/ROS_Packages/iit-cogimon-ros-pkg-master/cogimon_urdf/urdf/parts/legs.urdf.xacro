@@ -1,0 +1,427 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+<xacro:if value="${COGIMON_LEFT_LEG}" >
+
+<!-- LINKS -->
+<link name ="LHipMot">
+    <inertial>
+      <origin xyz="${-4.1435899e+01*mmTom} ${-2.4099021e-01*mmTom} ${-6.7437774e+01*mmTom}" rpy="0 0 0"/>
+      <mass value="2.0936467"/>      
+      <inertia ixx="${1.0806924e+04*mm2Tom2}"  ixy="${3.3743172e+01*mm2Tom2}"  ixz="${-1.3329083e+03*mm2Tom2}" iyy="${1.1288691e+04*mm2Tom2}" iyz="${5.6918305e+01*mm2Tom2}" izz="${5.3916798e+03*mm2Tom2}" />
+    </inertial>
+    <visual>
+      <origin xyz="0. 0. 0." rpy="0 0 0."/>
+      <material name="green"/>
+      <geometry name="RHipMot_visual">
+        <mesh filename="package://cogimon_urdf/meshes/HipRoll.stl" scale="${mmTom} ${mmTom} ${mmTom}" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.0 0. 0" rpy="0 0 0."/>
+      <geometry name="RHipMot_collision">
+        <mesh filename="package://cogimon_urdf/meshes/simple/HipRoll.stl" scale="${mmTom} ${mmTom} ${mmTom}" />
+      </geometry>             
+    </collision>
+</link>
+
+<link name ="LThighUpLeg">
+    <inertial>   
+      <origin xyz="${5.8688639e-01*mmTom} ${-6.2440385e+01*mmTom} ${-8.5057072e+01*mmTom}" rpy="0 0 0"/>
+      <mass value="1.6115687"/>     
+      <inertia ixx="${1.6169151e+04*mm2Tom2}"  ixy="${-2.1886129e+01*mm2Tom2}"  ixz="${6.0058109e+01*mm2Tom2}" iyy="${1.4437800e+04*mm2Tom2}" iyz="${-2.7173225e+03*mm2Tom2}" izz="${3.9254506e+03*mm2Tom2}" />
+    </inertial>
+    <visual>
+      <origin xyz="0. 0. 0." rpy="0 0 0."/>
+      <material name="dark_grey"/>
+      <geometry name="LThighUpLeg_visual">
+        <mesh filename="package://cogimon_urdf/meshes/HipPitch.stl" scale="${mmTom} ${mmTom} ${mmTom}" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.0 0. 0" rpy="0 0 0."/>
+      <geometry name="LThighUpLeg_collision">
+        <mesh filename="package://cogimon_urdf/meshes/simple/HipPitch.stl" scale="${mmTom} ${mmTom} ${mmTom}" />
+      </geometry>             
+    </collision>
+</link>
+
+<link name ="LThighLowLeg">
+    <inertial>       
+      <origin xyz="${-2.1136410e+01*mmTom} ${-4.2862386e+00*mmTom} ${-3.8232267e+01*mmTom}" rpy="0 0 0"/>
+      <mass value="1.7454681"/>       
+      <inertia ixx="${5.9857438e+03*mm2Tom2}"  ixy="${-4.0155441e+01*mm2Tom2}"  ixz="${-8.0168603e+02*mm2Tom2}" iyy="${6.6483492e+03*mm2Tom2}" iyz="${-1.1435964e+02*mm2Tom2}" izz="${4.4665032e+03*mm2Tom2}" />
+    </inertial>
+    <visual>
+      <origin xyz="0. 0. 0." rpy="0 0 0."/>
+      <material name="green"/>
+      <geometry name="LThighLowLeg_visual">
+        <mesh filename="package://cogimon_urdf/meshes/HipYaw.stl" scale="${mmTom} ${mmTom} ${mmTom}" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.0 0. 0" rpy="0 0 0."/>
+      <geometry name="LThighLowLeg_collision">
+        <mesh filename="package://cogimon_urdf/meshes/simple/HipYaw.stl" scale="${mmTom} ${mmTom} ${mmTom}" />
+      </geometry>             
+    </collision>
+</link>
+
+<link name ="LLowLeg">
+    <inertial>         
+      <origin xyz="${2.7363015e+01*mmTom} ${-5.7802070e+01*mmTom} ${-1.9306454e+02*mmTom}" rpy="0 0 0"/>
+      <mass value="3.7014912"/>         
+      <inertia ixx="${6.4669769e+04*mm2Tom2}"  ixy="${3.6914631e+02*mm2Tom2}"  ixz="${5.3710941e+03 *mm2Tom2}" iyy="${6.3323486e+04*mm2Tom2}" iyz="${-2.7319883e+03*mm2Tom2}" izz="${8.1842652e+03*mm2Tom2}" />
+    </inertial>
+    <visual>
+      <origin xyz="0. 0. 0." rpy="0 0 0."/>
+      <material name="dark_grey"/>
+      <geometry name="LLowLeg_visual">
+        <mesh filename="package://cogimon_urdf/meshes/KneePitch.stl" scale="${mmTom} ${mmTom} ${mmTom}" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.0 0. 0" rpy="0 0 0."/>
+      <geometry name="LLowLeg_collision">
+        <mesh filename="package://cogimon_urdf/meshes/simple/KneePitch.stl" scale="${mmTom} ${mmTom} ${mmTom}" />
+      </geometry>             
+    </collision>
+</link>
+
+<link name ="LFootmot">
+    <inertial>    
+      <origin xyz="${1.1213007e+00*mmTom} ${4.6152281e-01*mmTom} ${-1.1449670e-03*mmTom}" rpy="0 0 0"/>
+      <mass value="1.7723821e-01"/>      
+      <inertia ixx="${2.8142035e+01*mm2Tom2}"  ixy="${9.1715528e-02*mm2Tom2}"  ixz="${-2.1701012e-04*mm2Tom2}" iyy="${9.7378402e+01*mm2Tom2}" iyz="${3.7303915e-04*mm2Tom2}" izz="${1.1570584e+02*mm2Tom2}" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry name="LFootmot_visual">
+        <mesh filename="package://cogimon_urdf/meshes/AnklePitch.stl" scale="${mmTom} ${mmTom} ${mmTom}" />
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry name="LFootmot_collision">
+        <mesh filename="package://cogimon_urdf/meshes/simple/AnklePitch.stl" scale="${mmTom} ${mmTom} ${mmTom}" />
+      </geometry>             
+    </collision>
+</link>
+
+<xacro:if value="${COGIMON_FEET_2}" >
+<link name ="LFoot">
+    <inertial>       
+      <origin xyz="${-7.7094563*mmTom} ${-6.5520742e-02*mmTom} ${-4.3453782e+01*mmTom}" rpy="0 0 0"/>
+      <mass value="2.0663292"/>           
+      <inertia ixx="${2.6932116e+03*mm2Tom2}"  ixy="${4.2852647e+00*mm2Tom2}"  ixz="${3.7001167e+02*mm2Tom2}" iyy="${7.1293752e+03*mm2Tom2}" iyz="${-2.5956611*mm2Tom2}" izz="${8.6807822e+03*mm2Tom2}" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry name="LFoot_visual">
+        <mesh filename="package://cogimon_urdf/meshes/Foot2.stl" scale="${mmTom} ${mmTom} ${mmTom}" />
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin xyz="0.0 0.0 -0.061" rpy="0 0 0"/>
+       <geometry>
+        <box size="0.21 0.11 0.015" />
+       </geometry>             
+    </collision>
+</link>
+</xacro:if>
+<xacro:unless value="${COGIMON_FEET_2}" >
+<link name ="LFoot">
+    <inertial>       
+      <origin xyz="${-8.6960323e+00*mmTom} ${-6.6741928e-02*mmTom} ${-4.1675435e+01*mmTom}" rpy="0 0 0"/>
+      <mass value="1.7819594e+00"/>           
+      <inertia ixx="${1.9182691e+03*mm2Tom2}"  ixy="${5.7926583e+00*mm2Tom2}"  ixz="${3.2836542e+02*mm2Tom2}" iyy="${5.3518735e+03*mm2Tom2}" iyz="${-3.0518008e+00*mm2Tom2}" izz="${ 6.4063918e+03*mm2Tom2}" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry name="LFoot_visual">
+        <mesh filename="package://cogimon_urdf/meshes/Foot.stl" scale="${mmTom} ${mmTom} ${mmTom}" />
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin xyz="0.0 0.0 -0.046" rpy="0 0 0"/>
+       <geometry>
+        <box size="0.21 0.11 0.015" />
+       </geometry>             
+    </collision>
+</link>
+</xacro:unless>
+
+<!-- JOINTS -->
+<joint name="LHipLat" type="revolute">
+    <parent link="Waist"/>
+    <child link="LHipMot"/>
+    <origin xyz="${15.45*mmTom} ${112.0*mmTom} ${-50.0*mmTom}" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit velocity="7.4" effort="200" lower="${-30.*toRad}" upper="${95.*toRad}" />
+    <dynamics friction="0" damping="3.0"/>
+</joint>
+
+<joint name="LHipSag" type="revolute">
+    <parent link="LHipMot"/>
+    <child link="LThighUpLeg"/>
+    <origin xyz="${-59.*mmTom} ${78.65*mmTom} ${-118.5*mmTom}" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit velocity="7.4" effort="200" lower="${-110.*toRad}" upper="${89.*toRad}" />
+    <dynamics friction="0" damping="3.0"/>
+</joint>
+
+<joint name="LHipYaw" type="revolute">
+    <parent link="LThighUpLeg"/>
+    <child link="LThighLowLeg"/>
+    <origin xyz="${0.*mmTom} ${-90.*mmTom} ${-256.45*mmTom}" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit velocity="4.6" effort="120" lower="${-32.*toRad}" upper="${90.*toRad}" />
+    <dynamics friction="0" damping="3.0"/>
+</joint>
+
+<joint name="LKneePitch" type="revolute">
+    <parent link="LThighLowLeg"/>
+    <child link="LLowLeg"/>
+    <origin xyz="${-39.*mmTom} ${64.1*mmTom} ${-60.7*mmTom}" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit velocity="5.5" effort="200" lower="${0.*toRad}" upper="${140.*toRad}" />
+    <dynamics friction="0" damping="3.0"/>
+</joint>
+
+<!-- Here we do an assumption: Ankle Pitch can go -50/+40 while Ankle Roll -15/+15-->
+<joint name="LAnklePitch" type="revolute">
+    <parent link="LLowLeg"/>
+    <child link="LFootmot"/>
+    <origin xyz="${39.*mmTom} ${-61.6*mmTom} ${-425.294*mmTom}" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit velocity="4.9" effort="200" lower="${-50.*toRad}" upper="${40.*toRad}" />
+    <dynamics friction="0" damping="0.1"/>
+</joint>
+ 
+<joint name="LAnkleRoll" type="revolute">
+    <parent link="LFootmot"/>
+    <child link="LFoot"/>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit velocity="3.2" effort="60" lower="${-15.*toRad}" upper="${15.*toRad}" />
+    <dynamics friction="0" damping="3.0"/>
+</joint> 
+</xacro:if>
+
+
+<xacro:if value="${COGIMON_RIGHT_LEG}" >
+
+<!-- LINKS -->
+<link name ="RHipMot">
+    <inertial>
+      <origin xyz="${-4.1435899e+01*mmTom} ${2.4099021e-01*mmTom} ${-6.7437774e+01*mmTom}" rpy="0 0 0"/>
+      <mass value="2.0936467"/>
+      <inertia ixx="${1.0806924e+04*mm2Tom2}"  ixy="${-3.3743172e+01*mm2Tom2}"  ixz="${-1.3329083e+03*mm2Tom2}" iyy="${1.1288691e+04*mm2Tom2}" iyz="${-5.6918305e+01*mm2Tom2}" izz="${5.3916798e+03*mm2Tom2}" />
+    </inertial>
+    <visual>
+      <origin xyz="0.0 0 0" rpy="0 0 0"/>
+      <material name="green"/>
+      <geometry name="RHipMot_visual">
+        <mesh filename="package://cogimon_urdf/meshes/HipRoll.stl" scale="${mmTom} ${-mmTom} ${mmTom}" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.0 0. 0" rpy="0 0 0."/>
+      <geometry name="RHipMot_collision">
+        <mesh filename="package://cogimon_urdf/meshes/simple/HipRoll.stl" scale="${mmTom} ${-mmTom} ${mmTom}" />
+      </geometry>             
+    </collision>
+</link>
+
+<link name ="RThighUpLeg">
+    <inertial>
+      <origin xyz="${5.8688639e-01*mmTom} ${6.2440385e+01*mmTom} ${-8.5057072e+01*mmTom}" rpy="0 0 0"/>
+      <mass value="1.6115687"/>
+      <inertia ixx="${1.6169151e+04*mm2Tom2}"  ixy="${2.1886129e+01*mm2Tom2}"  ixz="${6.0058109e+01*mm2Tom2}" iyy="${1.4437800e+04*mm2Tom2}" iyz="${2.7173225e+03*mm2Tom2}" izz="${3.9254506e+03*mm2Tom2}" />
+    </inertial>
+    <visual>
+      <origin xyz="0. 0. 0." rpy="0 0 0."/>
+      <material name="dark_grey"/>
+      <geometry name="RThighUpLeg_visual">
+        <mesh filename="package://cogimon_urdf/meshes/HipPitch.stl" scale="${mmTom} ${-mmTom} ${mmTom}" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.0 0. 0" rpy="0 0 0."/>
+      <geometry name="RThighUpLeg_collision">
+        <mesh filename="package://cogimon_urdf/meshes/simple/HipPitch.stl" scale="${mmTom} ${-mmTom} ${mmTom}" />
+      </geometry>             
+    </collision>
+  </link>
+
+<link name ="RThighLowLeg">
+    <inertial>   
+      <origin xyz="${-2.1136410e+01*mmTom} ${4.2862386e+00*mmTom} ${-3.8232267e+01*mmTom}" rpy="0 0 0"/>
+      <mass value="1.7454681"/>     
+      <inertia ixx="${5.9857438e+03*mm2Tom2}"  ixy="${4.0155441e+01*mm2Tom2}"  ixz="${-8.0168603e+02*mm2Tom2}" iyy="${6.6483492e+03*mm2Tom2}" iyz="${1.1435964e+02*mm2Tom2}" izz="${4.4665032e+03*mm2Tom2}" />
+    </inertial>
+    <visual>
+      <origin xyz="0. 0. 0." rpy="0 0 0."/>
+      <material name="green"/>
+      <geometry name="RThighLowLeg_visual">
+        <mesh filename="package://cogimon_urdf/meshes/HipYaw.stl" scale="${mmTom} ${-mmTom} ${mmTom}" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.0 0. 0" rpy="0 0 0."/>
+      <geometry name="RThighLowLeg_collision">
+        <mesh filename="package://cogimon_urdf/meshes/simple/HipYaw.stl" scale="${mmTom} ${-mmTom} ${mmTom}" />
+      </geometry>             
+    </collision>
+</link>
+
+<link name ="RLowLeg">
+    <inertial>         
+      <origin xyz="${2.7363015e+01*mmTom} ${5.7802070e+01*mmTom} ${-1.9306454e+02*mmTom}" rpy="0 0 0"/>
+      <mass value="3.7014912"/>         
+      <inertia ixx="${6.4669769e+04*mm2Tom2}"  ixy="${-3.6914631e+02*mm2Tom2}"  ixz="${5.3710941e+03 *mm2Tom2}" iyy="${6.3323486e+04*mm2Tom2}" iyz="${2.7319883e+03*mm2Tom2}" izz="${8.1842652e+03*mm2Tom2}" />
+    </inertial>
+    <visual>
+      <origin xyz="0. 0. 0." rpy="0 0 0."/>
+      <material name="dark_grey"/>
+      <geometry name="RLowLeg_visual">
+        <mesh filename="package://cogimon_urdf/meshes/KneePitch.stl" scale="${mmTom} ${-mmTom} ${mmTom}" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.0 0. 0" rpy="0 0 0."/>
+      <geometry name="RLowLeg_collision">
+        <mesh filename="package://cogimon_urdf/meshes/simple/KneePitch.stl" scale="${mmTom} ${-mmTom} ${mmTom}" />
+      </geometry>             
+    </collision>
+</link>
+
+<link name ="RFootmot">
+    <inertial>    
+      <origin xyz="${1.1213007e+00*mmTom} ${4.6152281e-01*mmTom} ${-1.1449670e-03*mmTom}" rpy="0 0 0"/>
+      <mass value="1.7723821e-01"/>      
+      <inertia ixx="${2.8142035e+01*mm2Tom2}"  ixy="${9.1715528e-02*mm2Tom2}"  ixz="${-2.1701012e-04*mm2Tom2}" iyy="${9.7378402e+01*mm2Tom2}" iyz="${3.7303915e-04*mm2Tom2}" izz="${1.1570584e+02*mm2Tom2}" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry name="RFootmot_visual">
+        <mesh filename="package://cogimon_urdf/meshes/AnklePitch.stl" scale="${mmTom} ${mmTom} ${mmTom}" />
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry name="RFootmot_collision">
+        <mesh filename="package://cogimon_urdf/meshes/simple/AnklePitch.stl" scale="${mmTom} ${mmTom} ${mmTom}" />
+      </geometry>             
+    </collision>
+</link>
+
+<xacro:if value="${COGIMON_FEET_2}" >
+<link name ="RFoot">
+    <inertial>       
+      <origin xyz="${-7.7094563*mmTom} ${-6.5520742e-02*mmTom} ${-4.3453782e+01*mmTom}" rpy="0 0 0"/>
+      <mass value="2.0663292"/>           
+      <inertia ixx="${2.6932116e+03*mm2Tom2}"  ixy="${4.2852647e+00*mm2Tom2}"  ixz="${3.7001167e+02*mm2Tom2}" iyy="${7.1293752e+03*mm2Tom2}" iyz="${-2.5956611*mm2Tom2}" izz="${8.6807822e+03*mm2Tom2}" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry name="LFoot_visual">
+        <mesh filename="package://cogimon_urdf/meshes/Foot2.stl" scale="${mmTom} ${mmTom} ${mmTom}" />
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin xyz="0.0 0.0 -0.061" rpy="0 0 0"/>
+       <geometry>
+        <box size="0.21 0.11 0.015" />
+       </geometry>             
+    </collision>
+</link>
+</xacro:if>
+<xacro:unless value="${COGIMON_FEET_2}" >
+<link name ="RFoot">
+    <inertial>       
+      <origin xyz="${-8.6960323e+00*mmTom} ${-6.6741928e-02*mmTom} ${-4.1675435e+01*mmTom}" rpy="0 0 0"/>
+      <mass value="1.7819594e+00"/>           
+      <inertia ixx="${1.9182691e+03*mm2Tom2}"  ixy="${5.7926583e+00*mm2Tom2}"  ixz="${3.2836542e+02*mm2Tom2}" iyy="${5.3518735e+03*mm2Tom2}" iyz="${-3.0518008e+00*mm2Tom2}" izz="${ 6.4063918e+03*mm2Tom2}" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry name="RFoot_visual">
+        <mesh filename="package://cogimon_urdf/meshes/Foot.stl" scale="${mmTom} ${mmTom} ${mmTom}" />
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin xyz="0.0 0.0 -0.046" rpy="0 0 0"/>
+       <geometry>
+        <box size="0.21 0.11 0.015" />
+       </geometry>             
+    </collision>
+</link>
+</xacro:unless>
+
+<!-- JOINTS -->
+<joint name="RHipLat" type="revolute">
+    <parent link="Waist"/>
+    <child link="RHipMot"/>
+    <origin xyz="${15.45*mmTom} ${-112.0*mmTom} ${-50.0*mmTom}" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit velocity="7.4" effort="200" lower="${-95.*toRad}" upper="${30.*toRad}" />
+    <dynamics friction="0" damping="3.0"/>
+</joint>
+
+<joint name="RHipSag" type="revolute">
+    <parent link="RHipMot"/>
+    <child link="RThighUpLeg"/>
+    <origin xyz="${-59.*mmTom} ${-78.65*mmTom} ${-118.5*mmTom}" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit velocity="7.4" effort="200" lower="${-110.*toRad}" upper="${89.*toRad}" />
+    <dynamics friction="0" damping="3.0"/>
+</joint>
+
+<joint name="RHipYaw" type="revolute">
+    <parent link="RThighUpLeg"/>
+    <child link="RThighLowLeg"/>
+    <origin xyz="${0.*mmTom} ${90.*mmTom} ${-256.45*mmTom}" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit velocity="4.9" effort="120" lower="${-90.*toRad}" upper="${32.*toRad}" />
+    <dynamics friction="0" damping="3.0"/>
+</joint>
+
+<joint name="RKneePitch" type="revolute">
+    <parent link="RThighLowLeg"/>
+    <child link="RLowLeg"/>
+    <origin xyz="${-39.*mmTom} ${-64.1*mmTom} ${-60.7*mmTom}" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit velocity="5.5" effort="200" lower="${0.*toRad}" upper="${140.*toRad}" />
+    <dynamics friction="0" damping="3.0"/>
+</joint>
+
+<!-- Here we do an assumption: Ankle Pitch can go -50/+40 while Ankle Roll -15/+15-->
+<joint name="RAnklePitch" type="revolute">
+    <parent link="RLowLeg"/>
+    <child link="RFootmot"/>
+    <origin xyz="${39.*mmTom} ${61.6*mmTom} ${-425.294*mmTom}" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit velocity="4.9" effort="200" lower="${-50.*toRad}" upper="${40.*toRad}" />
+    <dynamics friction="0" damping="0.1"/>
+</joint> 
+
+<joint name="RAnkleRoll" type="revolute">
+    <parent link="RFootmot"/>
+    <child link="RFoot"/>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit velocity="3.2" effort="60" lower="${-15.*toRad}" upper="${15.*toRad}" />
+    <dynamics friction="0" damping="3.0"/>
+</joint> 
+</xacro:if>
+
+
+
+</robot>

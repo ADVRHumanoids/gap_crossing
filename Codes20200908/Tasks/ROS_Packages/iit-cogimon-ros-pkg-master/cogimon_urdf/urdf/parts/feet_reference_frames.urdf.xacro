@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+<xacro:macro name="reference_frame_foot" params="parent name x y">
+       <link name="${name}_link"/>
+
+	<joint name="${name}_joint" type="fixed">
+		<origin xyz="${x} ${y} 0" rpy="0 0 0" />
+		<parent link="${parent}"/>
+		<child link="${name}_link"/>
+	</joint>
+</xacro:macro>
+
+<xacro:macro name="references_frame_foot" params="parent name">
+       <xacro:reference_frame_foot parent="${parent}" name="${name}_upper_right" x="${107.*mmTom}" y="${-55.*mmTom}" />
+	<xacro:reference_frame_foot parent="${parent}" name="${name}_upper_left" x="${107.*mmTom}" y="${55.*mmTom}" />
+	<xacro:reference_frame_foot parent="${parent}" name="${name}_lower_right" x="${-103.5*mmTom}" y="${-55.*mmTom}" />
+	<xacro:reference_frame_foot parent="${parent}" name="${name}_lower_left" x="${-103.5*mmTom}" y="${55.*mmTom}" />	
+</xacro:macro>
+
+<xacro:if value="${COGIMON_LEFT_LEG}">
+<link name="l_ankle"/>
+<link name="l_sole"/>
+<link name="l_toe"/>
+<link name="l_heel"/>
+<link name="l_leg_ft"/>
+
+<joint name="l_leg_ft_joint" type="fixed">
+       <origin xyz="0 0 -0.035" rpy="0 0 0" />
+	<parent link="LFoot"/>
+	<child link="l_leg_ft"/>
+</joint>
+
+<joint name="l_ankle_joint" type="fixed">
+       <origin xyz="0 0 0" rpy="0 0 0" />
+	<parent link="LFoot"/>
+	<child link="l_ankle"/>
+</joint>
+
+<joint name="l_sole_joint" type="fixed">
+        <xacro:if value="${COGIMON_FEET_2}">
+          <origin xyz="0 0 ${-69.*mmTom}" rpy="0 0 0" />
+        </xacro:if>
+        <xacro:unless value="${COGIMON_FEET_2}">
+          <origin xyz="0 0 ${-54.*mmTom}" rpy="0 0 0" />
+        </xacro:unless>
+	<parent link="l_ankle"/>
+	<child link="l_sole"/>
+</joint>
+
+<joint name="l_toe_joint" type="fixed">
+       <origin xyz="${107.*mmTom} 0 0" rpy="0 0 0" />
+	<parent link="l_sole"/>
+	<child link="l_toe"/>
+</joint>
+
+<joint name="l_heel_joint" type="fixed">
+       <origin xyz="${-103.5*mmTom} 0 0" rpy="0 0 0" />
+	<parent link="l_sole"/>
+	<child link="l_heel"/>
+</joint>
+
+<xacro:references_frame_foot parent="l_sole" name="l_foot"/>
+</xacro:if>
+
+<xacro:if value="${COGIMON_RIGHT_LEG}">
+<link name="r_ankle"/>
+<link name="r_sole"/>
+<link name="r_toe"/>
+<link name="r_heel"/>
+<link name="r_leg_ft"/>
+
+<joint name="r_leg_ft_joint" type="fixed">
+       <origin xyz="0 0 -0.035" rpy="0 0 0" />
+	<parent link="RFoot"/>
+	<child link="r_leg_ft"/>
+</joint>
+
+<joint name="r_ankle_joint" type="fixed">
+       <origin xyz="0 0 0" rpy="0 0 0" />
+	<parent link="RFoot"/>
+	<child link="r_ankle"/>
+</joint>
+
+<joint name="r_sole_joint" type="fixed">
+        <xacro:if value="${COGIMON_FEET_2}">
+          <origin xyz="0 0 ${-69.*mmTom}" rpy="0 0 0" />
+        </xacro:if>
+        <xacro:unless value="${COGIMON_FEET_2}">
+          <origin xyz="0 0 ${-54.*mmTom}" rpy="0 0 0" />
+        </xacro:unless>
+	<parent link="r_ankle"/>
+	<child link="r_sole"/>
+</joint>
+
+<joint name="r_toe_joint" type="fixed">
+       <origin xyz="${107.*mmTom} 0 0" rpy="0 0 0" />
+	<parent link="r_sole"/>
+	<child link="r_toe"/>
+</joint>
+
+<joint name="r_heel_joint" type="fixed">
+       <origin xyz="${-103.5*mmTom} 0 0" rpy="0 0 0" />
+	<parent link="r_sole"/>
+	<child link="r_heel"/>
+</joint>
+
+<xacro:references_frame_foot parent="r_sole" name="r_foot"/>
+</xacro:if>
+
+</robot>
