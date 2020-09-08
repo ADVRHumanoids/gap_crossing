@@ -1,0 +1,106 @@
+<!--<?xml version="1.0"?>-->
+<robot  xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!-- Here all arguments from launch file are evaluated to the final xacro poropeties.
+     Also all the parameter dependencies are resolved-->
+
+<!-- basic arguments -->
+<xacro:property name="LEFT_END_EFFECTOR" value="$(arg LEFT_END_EFFECTOR)"/>
+<xacro:property name="RIGHT_END_EFFECTOR" value="$(arg RIGHT_END_EFFECTOR)"/>
+<xacro:property name="COLLISION_MODEL" value="$(arg COLLISION_MODEL)"/>
+<xacro:property name="VISUAL_MODEL" value="$(arg VISUAL_MODEL)"/>
+
+<xacro:property name="ARMS" value="$(arg ARMS)"/>
+<xacro:property name="LEGS" value="$(arg LEGS)"/>
+<xacro:property name="TORSO" value="$(arg TORSO)"/>
+<xacro:property name="HEAD" value="$(arg HEAD)"/>
+<xacro:property name="WHEELS" value="$(arg WHEELS)"/>
+<xacro:property name="STATIC" value="$(arg STATIC)"/>
+
+<xacro:property name="GAZEBO" value="$(arg GAZEBO)"/>
+<xacro:property name="MIDDLEWARE" value="$(arg MIDDLEWARE)"/>
+<xacro:property name="XBOT_CONFIG_FILE" value="$(arg XBOT_CONFIG_FILE)"/>
+<xacro:property name="INERTIA_PARAM" value="$(arg INERTIA_PARAM)"/>
+<xacro:property name="KINEMATIC_PARAM" value="$(arg KINEMATIC_PARAM)"/>
+<xacro:property name="LIMITS" value="$(arg LIMITS)"/>
+
+<xacro:property name="TORSO_ACTUATORS" value="$(arg TORSO_ACTUATORS)"/>
+<xacro:property name="ARM_ACTUATORS" value="$(arg ARM_ACTUATORS)"/>
+<xacro:property name="LEG_ACTUATORS" value="$(arg LEG_ACTUATORS)"/>
+<xacro:property name="WHEELS_ACTUATORS" value="$(arg WHEELS_ACTUATORS)"/>
+<xacro:property name="HEAD_ACTUATORS" value="$(arg HEAD_ACTUATORS)"/>
+
+<xacro:property name="ARM_SENSORS" value="$(arg ARM_SENSORS)"/>
+<xacro:property name="LEG_SENSORS" value="$(arg LEG_SENSORS)"/>
+<xacro:property name="FT_SENSORS" value="$(arg FT_SENSORS)"/>
+<xacro:property name="BUMBERS" value="$(arg BUMBERS)"/>
+<xacro:property name="IMU" value="$(arg IMU)"/>
+<xacro:property name="KINECT" value="$(arg KINECT)"/>
+
+<xacro:property name="VELODYNE" value="$(arg VELODYNE)"/>
+<xacro:property name="MASS" value="$(arg MASS)"/>
+
+<!-- dependend arguments -->
+<xacro:property name="torso" value="${'true' if (TORSO in [True, 'true', 'fixed'] ) else 'false'}"/>
+
+<xacro:property name="head" value="${'true' if (False not in [torso, HEAD] and 'false' not in [torso, HEAD]) else 'false'}"/>
+
+<xacro:property name="arms" value="${'true' if (False not in [TORSO, ARMS] and 'false' not in [TORSO, ARMS]) else 'false'}"/>
+
+
+<xacro:property name="left_arm" value= "${'true' if (arms in [True, 'true'] and (ARMS in [True, 'true', 'left'] )) else 'false'}" />
+<xacro:property name="right_arm" value= "${'true' if (arms in [True, 'true'] and (ARMS in [True, 'true', 'right'] )) else 'false'}" />
+
+<xacro:property name="legs" value="${'true' if (LEGS not in [False, 'false']) else 'false'}"/>
+
+
+<xacro:property name="pelvis" value= "${'true' if (legs in [True, 'true']) else 'false'}" />
+
+<xacro:property name="wheels" value="${'true' if (False not in [WHEELS, legs] and 'false' not in [WHEELS, legs]) else 'false'}"/>
+
+<xacro:property name="static" value="${'true' if (STATIC in [True, 'true'] or False in [legs, LEG_ACTUATORS] or 'false' in [legs, LEG_ACTUATORS]) else 'false'}"/>
+<xacro:property name="reference" value="${'fixed' if (static in [True, 'true']) else 'floating'}" />
+<xacro:property name="torso_joint" value="${'fixed' if ('fixed' in [TORSO]) else 'revolute'}"/>
+
+<xacro:property name="left_arm_mount" value= "${'revolute' if LEFT_END_EFFECTOR in ['soft_hand'] else 'fixed'}" />
+<xacro:property name="right_arm_mount" value= "${'revolute' if RIGHT_END_EFFECTOR in ['soft_hand'] else 'fixed'}" />
+
+<xacro:property name="left_end_effector" value= "${LEFT_END_EFFECTOR.split('fixed_', 2).pop()}" />
+<xacro:property name="right_end_effector" value= "${RIGHT_END_EFFECTOR.split('fixed_', 2).pop()}" />
+
+
+<!-- ACTUATION -->
+<xacro:property name="torso_actuators" value="${'true' if (False not in [TORSO_ACTUATORS, TORSO] and 'false' not in [TORSO_ACTUATORS, TORSO]) else 'false'}"/>
+
+<xacro:property name="arm_actuators" value="${'true' if (False not in [ARM_ACTUATORS, TORSO_ACTUATORS, arms] and 'false' not in [ARM_ACTUATORS, TORSO_ACTUATORS, arms]) else 'false'}"/>
+<xacro:property name="leg_actuators" value="${'true' if (False not in [LEG_ACTUATORS, legs] and 'false' not in [LEG_ACTUATORS, legs]) else 'false'}"/>
+<xacro:property name="head_actuators" value="${'true' if (False not in [HEAD_ACTUATORS, head] and 'false' not in [HEAD_ACTUATORS, head]) else 'false'}"/>
+<xacro:property name="torso_actuators" value="${'true' if (False not in [TORSO_ACTUATORS, TORSO] and 'false' not in [TORSO_ACTUATORS, TORSO]) else 'false'}"/>
+
+<!-- SENSORS -->
+<xacro:property name="arm_sensors" value="${'true' if (False not in [ARM_SENSORS, arms] and 'false' not in [ARM_SENSORS, arms]) else 'false'}"/>
+<xacro:property name="leg_sensors" value="${'true' if (False not in [LEG_SENSORS, legs] and 'false' not in [LEG_SENSORS, legs]) else 'false'}"/>
+<xacro:property name="ft_sensors" value="${'revolute' if (False not in [FT_SENSORS]) else 'fixed'}"/>
+<xacro:property name="bumbers" value="${'true' if (BUMBERS not in [False, 'false']) else 'false'}"/>
+<xacro:property name="imu" value="${'true' if (False not in [IMU, pelvis] and 'false' not in [IMU, pelvis]) else 'false'}"/>
+<xacro:property name="kinect" value="${'true' if (False not in [KINECT, head] and 'false' not in [KINECT, head]) else 'false'}"/>
+<xacro:property name="velodyne" value="${'true' if (False not in [VELODYNE, head] and 'false' not in [VELODYNE, head]) else 'false'}"/>
+<!--xacro:property name="velodyne" value="false"/-->
+
+<!-- LOAD PARAMETERS -->
+<xacro:property name="package" value="$(find centauro)"/>
+
+<xacro:property name="xbot_config_file" value="${XBOT_CONFIG_FILE}"/>
+<xacro:property name="inertia_parameters_file" value="${package + '/centauro_urdf/inertia_parameters/' + INERTIA_PARAM + '.xacro'}"/>
+<xacro:property name="kinematic_parameters_file" value="${package + '/centauro_urdf/kinematic_parameters/' + KINEMATIC_PARAM + '.xacro'}"/>
+<xacro:property name="limits" value="${LIMITS}"/>
+
+<xacro:property name="middleware" value="${MIDDLEWARE}"/>
+
+<xacro:property name="friction" value="10.0" />
+<xacro:property name="damping_legs" value="1.0" />
+<xacro:property name="damping_arms" value="0.2" />
+<xacro:property name="friction_schunk" value="2.0" />
+<xacro:property name="damping_schunk" value="0.0" />
+
+</robot>
