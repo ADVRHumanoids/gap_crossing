@@ -137,31 +137,3 @@ for i in range(0, dim):
         ax.remove()
 ax.set_title("")
 plt.show()
-
-'''
-i = 0
-ax = plt.axes()
-plt.gca().set_aspect('equal')
-plt.xlim(xmin-0.5, xmax+0.5)
-plt.ylim(ymin-0.5, ymax+0.5)
-point = plt.scatter([CENTER[i, 0]],[CENTER[i, 1]], edgecolors=None)
-
-activation_step_area = matplotlib.patches.Polygon(numpy.array([[x_gap_min-activation_step, y_gap_min], [x_gap_min, y_gap_min], [x_gap_min, y_gap_max], [x_gap_min-activation_step, y_gap_max]]), facecolor = green, edgecolor=green )
-ax.add_patch(activation_step_area)
-
-gap = matplotlib.patches.Polygon(numpy.array([[x_gap_min, y_gap_min], [x_gap_max, y_gap_min], [x_gap_max, y_gap_max], [x_gap_min, y_gap_max]]), hatch = '/', facecolor = 'white', edgecolor = 'black' )
-ax.add_patch(gap)
-
-plt.plot([xBR_goal, xBL_goal],[yBR_goal, yBL_goal], '.-', color='red', linewidth=2 )
-plt.plot([xFL_goal, xFR_goal],[yFL_goal, yFR_goal], '.-', color='red', linewidth=2 )
-plt.plot([xCOMB_goal, xCOMF_goal],[yCOMB_goal, yCOMF_goal], '.-', color='red', linewidth=2 )
-
-
-plt.plot([BR[i,0], BL[i,0]],[BR[i, 1], BL[i, 1]], '.-', color='blue', linewidth=2 )
-plt.plot([FL[i,0], FR[i,0]],[FL[i, 1], FR[i, 1]], '.-', color='blue', linewidth=2 )
-plt.plot([COMB[i,0], COMF[i,0]],[COMB[i, 1], COMF[i, 1]], '.-', color='blue', linewidth=2 )
-
-    
-ax.set_title("")
-plt.savefig("init3.png")
-'''
