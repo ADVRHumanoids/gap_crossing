@@ -30,20 +30,6 @@ class color:
    UNDERLINE = '\033[4m'
    END = '\033[0m'
 
-
-# fct giving coords of target_frame wrt reference_frame
-def getPose(reference_frame, target_frame):
-    listener = tf.TransformListener()
-    listener.waitForTransform(reference_frame, target_frame, rospy.Time(), rospy.Duration(4.0))
-    while not rospy.is_shutdown():
-        try:
-            now = rospy.Time(0)
-            listener.waitForTransform(reference_frame, target_frame, now, rospy.Duration(4.0))
-            (t,r) = listener.lookupTransform(reference_frame, target_frame, now)
-            return (t, r)   
-        except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
-            continue
-
 # computes coefficients of a cubic with given initial and final positions and 0 velocity at beginning and end
 def cubic(vi, vf, dvi, dvf, duration):
     a = ((dvi + dvf)*duration + 2*(vi-vf))/duration**3
@@ -52,42 +38,6 @@ def cubic(vi, vf, dvi, dvf, duration):
     d = vi
     return a, b, c, d
 
-   
-#########################################################
-############## BRING TO HOME CONFIGURATION ##############
-#########################################################
-
-def homing(car, w1, w2, w3, w4, pelvis, com):
-    com.disable()
-    Tw1, _, _ = w1.getPoseReference()
-    Tw2, _, _ = w2.getPoseReference()
-    Tw3, _, _ = w3.getPoseReference()
-    Tw4, _, _ = w4.getPoseReference()
-    Tcar, _, _ = car.getPoseReference()
-
-    Tw1.translation_ref()[0] = 0.35
-    Tw1.translation_ref()[1] = 0.35
-    Tw2.translation_ref()[0] = 0.35
-    Tw2.translation_ref()[1] = -0.35
-    Tw3.translation_ref()[0] = -0.35
-    Tw3.translation_ref()[1] = 0.35
-    Tw4.translation_ref()[0] = -0.35
-    Tw4.translation_ref()[1] = -0.35
-
-    w1.setPoseTarget(Tw1, 1.0)
-    w2.setPoseTarget(Tw2, 1.0)
-    w3.setPoseTarget(Tw3, 1.0)
-    w4.setPoseTarget(Tw4, 1.0)
-
-    w1.waitReachCompleted(1.5)
-    w2.waitReachCompleted(1.5)
-    w3.waitReachCompleted(1.5)
-    w4.waitReachCompleted(1.5)
-
-    com.enable()
-    
-    movecar(car, [w1, w2, w3, w4], 1.0, [pelvis, com])
-    
 
 #########################################################
 ######### FUNCTIONS CORRESPONDING TO PRIMITIVES #########
