@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import matplotlib.axes
 import time
 
-ns = 40 # number of steps
+ns = 40 # number of static stances
 
 nc = 4  # number of contacts
 
