@@ -40,7 +40,7 @@ def gait_generation(p_init, moving_foot, step_counter, SP_center_last, com_last,
     if step_counter == 0:
         x_center = (p_FL[0] + p_FR[0] + p_BL[0] + p_BR[0])/4
         y_center = (p_FL[1] + p_FR[1] + p_BL[1] + p_BR[1])/4     
-        com_init = np.array([x_center, y_center, 0.]) + np.array([0.108, 0., 0.63]) # np.array([0.143, 0., 0.620])
+        com_init = np.array([x_center, y_center, 0.]) + np.array([0.108, 0., 0.63]) #+ np.array([0.143, 0., 0.620])
     elif step_counter == 1 or step_counter == 3:
         com_init = com_last
     elif step_counter == 2:
@@ -52,8 +52,8 @@ def gait_generation(p_init, moving_foot, step_counter, SP_center_last, com_last,
         com_init = SP_center + delta
 
     if step_counter == 0:
-        p_BR[0] += 0.2
-        p_BL[0] += 0.2
+        p_BR[0] += step_length
+        p_BL[0] += step_length
 
     dcom_init = np.array([0., 0., 0.])
     dcom_final = np.array([0., 0., 0.])
@@ -97,7 +97,7 @@ def gait_generation(p_init, moving_foot, step_counter, SP_center_last, com_last,
     # Lagrangian (minimize com velocity, forces, zcom and: a) step 1-3: com traveled distance (xy); b) step 4: distances com-pFL & com-pFR ---> the pelvis goes forward)
     l_p = 1000.
     l_v = 10.
-    l_f = 0.1#100.
+    l_f = 0.1
     l_z = 10000.
     l_fin = 100000.
 
@@ -110,25 +110,7 @@ def gait_generation(p_init, moving_foot, step_counter, SP_center_last, com_last,
     ode = {'x':x, 'p':f, 'ode':xdot, 'quad':L}
     opts = {'tf':sampling_time}
     F_dy = integrator('F_dy', 'cvodes', ode, opts)
-    '''
-    # Fixed step Runge-Kutta 4 integrator
-    M = 4 # RK4 steps per interval
-    DT = T/n_s/M
-    f_dy = Function('f', [x, f], [xdot, L])
-    X0 = MX.sym('X0', 6)
-    U = MX.sym('U', 12)
-    X = X0
-    Q = 0
-    for j in range(M):
-       k1, k1_q = f_dy(X, U)
-       k2, k2_q = f_dy(X + DT/2 * k1, U)
-       k3, k3_q = f_dy(X + DT/2 * k2, U)
-       k4, k4_q = f_dy(X + DT * k3, U)
-       X=X+DT/6*(k1 +2*k2 +2*k3 +k4)
-       Q = Q + DT/6*(k1_q + 2*k2_q + 2*k3_q + k4_q)
-    F_dy = Function('F', [X0, U], [X, Q],['x0','p'],['xf','qf'])
-    '''
-
+   
     # STATIC CONSTRAINTS
     # No rotation
     delta = vertcat(com, com ,com, com) - p[0:12]
@@ -561,19 +543,3 @@ def main():
 if __name__ == "__main__":
     com_hist_value = main()   
         
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
