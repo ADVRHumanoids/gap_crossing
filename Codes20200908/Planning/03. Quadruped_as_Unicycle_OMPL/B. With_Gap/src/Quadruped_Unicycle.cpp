@@ -18,24 +18,22 @@
 #include <iostream>
 #include <fstream>
 
-//vedi SST
+#define PI 			3.14159265
+#define TOL 			0.001
 
-#define MAX_ITERATION 	10
+// Solver
+#define MAX_ITERATION 		10
 #define TIME		  	5.0	
 #define THRESHOLD		0.1
 
-#define PI 				3.14159265
-
-
-//Movement lenghts
+//Movement dimensions
 #define DELTA_ROT 		10*(PI/180)
-#define ROL				0.05
+#define ROL			0.05
 #define STEP			0.20
 
-#define TOL 			0.001
-#define ACTIVATION_STEP_TH 0.05
-
 //Environment
+#define ACTIVATION_STEP_TH      0.05
+
 #define X_GAP_MIN 		2.215
 #define X_GAP_MAX 		2.365
 #define Y_GAP_MIN		-1.55
@@ -47,20 +45,22 @@
 #define Y_OBS_MAX		0.35
 
 //Robot geometry
-#define L				0.70
+#define L			0.70
+#define W_MIN			0.70
+
 #define L_MIN 			L-STEP		
-#define L_MAX 			L+STEP 		
-#define W_MIN			0.70	    
+#define L_MAX 			L+STEP 		    
 #define W_MAX			sqrt(pow(W_MIN, 2)+ pow(STEP, 2))
 
+// PRIMITIVES
 //Rotations
 #define CW  			0 //clockwise spin of DELTA_ROT
 #define CCW 			1 //counter-clockwise spin of DELTA_ROT
 //Rolls
 #define FW_4 			2 //forward roll of the four wheels of ROL
 #define BW_4 			3 //backward roll of the four wheels of ROL
-#define R_4				4 //right roll of the four wheels of ROL
-#define L_4				5 //left roll of the four wheels of ROL
+#define R_4			4 //right roll of the four wheels of ROL
+#define L_4			5 //left roll of the four wheels of ROL
 //Steps
 #define FW_S_BR			6 //forward step of back right foot
 #define FW_S_BL			7 //forward step of back left left
@@ -78,21 +78,6 @@ namespace oc = ompl::control;
 // 3) Try to connect the two vertex using a control action
 // 4) Continues until the goal region is reached
 
-double mod2PI(double angle)
-{
-	if (angle < -2*PI)
-	{
-		angle += 2*PI;
-	}
-	else
-	{
-		if (angle > 2*PI)
-		{
-			angle -= 2*PI;
-		}
-	}
-	return angle;
-}
 
 // A control-based motion planning problem requires a propagate function that associates a control action to a state variation. 
 // Specifically, DiscreteControlSpace pick a random int between the lower and upper bounds defined in the constructor and propagates the state
@@ -552,13 +537,9 @@ void plan()
 		// Create a start state
 		
 		ob::ScopedState<ob::CompoundStateSpace> start(space);
-		// wheel_4
 		double xBR_start = -0.35, yBR_start = -0.35;
-		// wheel_3
 		double xBL_start = -0.35, yBL_start = 0.35;
-		// wheel_2
 		double xFR_start = 0.35, yFR_start = -0.35;
-		// wheel_1
 		double xFL_start = 0.35, yFL_start = 0.35;
 		
 		start->as<ob::RealVectorStateSpace::StateType>(0)->values[0] = xBR_start;
@@ -596,8 +577,6 @@ void plan()
 	 
 		// Create a planner for the defined space
 		auto planner(std::make_shared<oc::RRT>(si));
-		//auto planner(std::make_shared<oc::EST>(si));
-		//auto planner(std::make_shared<oc::KPIECE1>(si));
 		
 		// Create the planner starting from the information collected before
 		planner->setProblemDefinition(pdef);
@@ -618,7 +597,6 @@ void plan()
 		std::cout << "\nOutcome: " << solved << "\n"<< std::endl;
 		
 		if (solved == ob::PlannerStatus::EXACT_SOLUTION || n == MAX_ITERATION)
-		//if (solved)
 		{
 			ob::PathPtr path = pdef->getSolutionPath();
 			
@@ -637,10 +615,8 @@ void plan()
 			path->print(log_file);
 			log_file.close();
         
-        
 			std::ofstream path_file;
 			path_file.open ("path.txt");
-			// path->as<ompl::geometric::PathGeometric>()->printAsMatrix(path_file);
 			path->as<ompl::control::PathControl>()->printAsMatrix(path_file);
 			path_file.close();
 			
