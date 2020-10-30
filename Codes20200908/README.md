@@ -21,7 +21,7 @@ To install:
 
 ## Run
 ### Planning with CasADi
-Using the NLP-based method, you can plan a sequence of static poses (stance and CoMs location) for a quadruped robot running `Planning/04. Quadruped_CASADI/quadruped_planner.py`.
+Using the NLP-based method, you can plan a sequence of static poses (stance and CoMs location) for a quadrupedal robot running `Planning/04. Quadruped_CASADI/quadruped_planner.py`.
 
 Variables that can be decided by user:
 - number of static stances `ns` (line 10);
@@ -30,4 +30,20 @@ Variables that can be decided by user:
 - final CoM locations (lines 42, 43);
 - gap location (lines 46-50);
 - maximum distance that can be traveled by a foot during a movement (line 53);
-- friction cones specifications (lines 102-103);
+- (fixed) leg length (line 55);
+- nominal length and width of the support polygon and their allowed variations (lines 57-60);
+- friction cones specifications (lines 120-121).
+
+### Planning with OMPL
+The following information are referred to the code in `Planning/03. Quadruped_as_Unicycle_OMPL/B. With_Gap/src/Quadruped_Unicycle.cpp`. Using the sampling-based method, you can plan a sequence of stances for a quadrupedal robot.
+
+Variables that can be decided by user:
+- macros (lines 23-49) regarding solver parameters, dimension of the movements, environment specifications (step activation zone, gap, obstacle), robot geometry (length and width);
+- environmental bounds (lines 506-509);
+- control duration (line 528);
+- start configuration (lines 540-543);
+- goal configuration (lines 558-561).
+
+Once a path is returned (`path.txt`), it can be seen using `Planning/03. Quadruped_as_Unicycle_OMPL/B. With_Gap/plot.py`, changing the parameters of the environment and the start and goal configuration if needed (lines 38-67). Additionally, finishing operations (aggregation of primitives of "the same kind") can be performed running `Planning/03. Quadruped_as_Unicycle_OMPL/B. With_Gap/clean.py`.
+
+Similarly for the other sampling-based planners (`Planning/01. Compass_OMPL`, `Planning/02. Biped_OMPL`, `Planning/03. Quadruped_as_Unicycle_OMPL/A. No_Step`).
