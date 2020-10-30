@@ -1,3 +1,0 @@
-/home/francesco/Desktop/Prova/Compass_OMPL/Dummy_Compass/CMakeFiles/rebuild_cache.dir
-/home/francesco/Desktop/Prova/Compass_OMPL/Dummy_Compass/CMakeFiles/edit_cache.dir
-/home/francesco/Desktop/Prova/Compass_OMPL/Dummy_Compass/CMakeFiles/Dummy_Compass.dir
