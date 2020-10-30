@@ -1,4 +1,3 @@
-# gap_crossing
 Master Theses on planning techniques for the gap-crossing with CENTAURO robot developed by Francesco Roscia and Matteo Sodano, from La Sapienza - Università di Roma.
 
 References:
