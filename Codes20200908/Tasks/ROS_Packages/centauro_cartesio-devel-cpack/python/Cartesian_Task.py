@@ -94,7 +94,7 @@ def homing(car, w1, w2, w3, w4, pelvis, com):
 #########################################################
 
 # fct for rolling along the x axis and y axis
-def roll(car, wheels, distance, axis, duration, to_be_disabled, cli):
+def roll(car, wheels, distance, axis, duration, to_be_disabled, cli, application, simulation):
 
     for item in to_be_disabled:
         item.disable()
@@ -117,11 +117,16 @@ def roll(car, wheels, distance, axis, duration, to_be_disabled, cli):
     dt = 0.01 
 
     if axis == 'x':
-        x_goal = x_init + c*distance
-        y_goal = y_init + s*distance
+       if simulation == 'experiment':
+           if application < 6:
+               distance += 0.01
+           else:
+              distance += 0.04
+       x_goal = x_init + c*distance
+       y_goal = y_init + s*distance
     elif axis == 'y':
-        x_goal = x_init + s*distance
-        y_goal = y_init - c*distance
+       x_goal = x_init + s*distance
+       y_goal = y_init - c*distance
 
     a_x, b_x, c_x, d_x = cubic(x_init, x_goal, 0., 0., duration)
     a_y, b_y, c_y, d_y = cubic(y_init, y_goal, 0., 0., duration)
@@ -351,15 +356,15 @@ def movecar(car, wheels, duration, to_be_disabled, cli):
         
 
 # fct for stepping. the step is a semi-circumference. every 0.1s, it is checked if the com lies in the support triangle
-def step(moving_foot, still_feet, step_length, duration, to_be_disabled, car, com, cli, filename_pos, filename_vel):
+def step(k, moving_foot, still_feet, step_length, duration, to_be_disabled, car, com, cli, filename_pos, filename_vel, simulation):
 
     for item in to_be_disabled:
         item.disable()
 
     com.enable()   
     
-    com_pos = np.loadtxt('/home/matteo/catkin_ws/src/centauro_cartesio-devel-cpack/python/' + filename_pos)
-    com_vel = np.loadtxt('/home/matteo/catkin_ws/src/centauro_cartesio-devel-cpack/python/' + filename_vel)
+    com_pos = np.loadtxt('/home/francesco/catkin_ws/src/centauro_cartesio-devel-cpack/python/' + filename_pos)
+    com_vel = np.loadtxt('/home/francesco/catkin_ws/src/centauro_cartesio-devel-cpack/python/' + filename_vel)
     interval_duration = 0.1
 
     t = 0.00
@@ -404,8 +409,15 @@ def step(moving_foot, still_feet, step_length, duration, to_be_disabled, car, co
     while counter < total:
        
        if counter%10 == 0:
-           com_init = com_pos[i]
-           com_goal = com_pos[i+1]
+           if k == 1 or k == 2:
+              com_init = com_pos[i] 
+              com_goal = com_pos[i+1] 
+           else:
+              com_init = com_pos[i]
+              com_goal = com_pos[i+1]
+           if simulation == 'experiment':
+              com_init += np.array([0.09, 0., 0.]) + np.array([0.135, 0., 0.])
+              com_goal += np.array([0.09, 0., 0.]) + np.array([0.135, 0., 0.])
            dcom_init = com_vel[i]
            dcom_goal = com_vel[i+1]
            
@@ -413,10 +425,6 @@ def step(moving_foot, still_feet, step_length, duration, to_be_disabled, car, co
            a_comy, b_comy, c_comy, d_comy = cubic(com_init[1], com_goal[1], dcom_init[1], dcom_goal[1], interval_duration)
            a_comz, b_comz, c_comz, d_comz = cubic(com_init[2], com_goal[2], dcom_init[2], dcom_goal[2], interval_duration)
            i += 1
-
-           print 'com_init: ' + str(com_init)
-           print 'com_goal: ' + str(com_goal)
-           print 'com: ' + str(Tcom.translation)
 
        Tcom.translation_ref()[0] = a_comx * (t-(i-1)*interval_duration)**3 + b_comx * (t-(i-1)*interval_duration)**2 + c_comx * (t-(i-1)*interval_duration) + d_comx
        Tcom.translation_ref()[1] = a_comy * (t-(i-1)*interval_duration)**3 + b_comy * (t-(i-1)*interval_duration)**2 + c_comy * (t-(i-1)*interval_duration) + d_comy
@@ -473,7 +481,11 @@ def main():
     k = 0
     
     # load file with primitives and number of times they are applied
-    plan = np.loadtxt('/home/matteo/catkin_ws/src/centauro_cartesio-devel-cpack/python/plan.txt')
+    #simulation = 'detour'
+    simulation = '4steps'
+    #simulation = 'experiment'
+    #simulation = 'only4steps'
+    plan = np.loadtxt('/home/francesco/catkin_ws/src/centauro_cartesio-devel-cpack/python/' + simulation + '/plan.txt')
     primitives = plan[:, 0]
     times = plan[:, 1]
 
@@ -510,40 +522,42 @@ def main():
             spin(car, [w1, w2, w3, w4], m.pi/18 * application, 5.0 * application, [com], cli)
         elif primitive == 2:
             print(color.BOLD + 'Primitive 2: forward roll of 0.05 m for ' + str(int(application)) + ' times. (' + str(i+1) + '/' + str(n_primitives) + ')' + color.END)
-            roll(car, [w1, w2, w3, w4], 0.05 * application, 'x', 1.0 * application, [com], cli)
+            roll(car, [w1, w2, w3, w4], 0.05 * application, 'x', 1.0 * application, [com], cli, application, simulation)
         elif primitive == 3:
             print(color.BOLD + 'Primitive 3: backward roll of 0.05 m for ' + str(int(application)) + ' times. (' + str(i+1) + '/' + str(n_primitives) + ')' + color.END)
-            roll(car, [w1, w2, w3, w4], -0.05 * application, 'x', 1.0 * application, [com], cli)
+            roll(car, [w1, w2, w3, w4], -0.05 * application, 'x', 1.0 * application, [com], cli, application, simulation)
         elif primitive == 4:
             print(color.BOLD + 'Primitive 4: right roll of 0.05 m for ' + str(int(application)) + ' times. (' + str(i+1) + '/' + str(n_primitives) + ')' + color.END)
-            roll(car, [w1, w2, w3, w4], 0.05 * application, 'y', 1.0 * application, [com], cli)
+            roll(car, [w1, w2, w3, w4], 0.05 * application, 'y', 1.0 * application, [com], cli, application, simulation)
         elif primitive == 5:
             print(color.BOLD + 'Primitive 5: left roll of 0.05 m for ' + str(int(application)) + ' times. (' + str(i+1) + '/' + str(n_primitives) + ')' + color.END)
-            roll(car, [w1, w2, w3, w4], -0.05 * application, 'y', 1.0 * application, [com], cli)
+            roll(car, [w1, w2, w3, w4], -0.05 * application, 'y', 1.0 * application, [com], cli, application, simulation)
         else:
            
             if k == 0:
+               if simulation == 'experiment':
+                   print(color.BOLD + 'CORRECTION PRIMITIVE: forward roll of 0.10 m!' + color.END)
+                   roll(car, [w1, w2, w3, w4], 0.135, 'x', 3.0, [com], cli, application)
+                
+               print(color.BOLD + 'Preparation to step: forward roll 0.20 m with back wheels.' + color.END)
+               rollTwoWheelsandMoveCom([w3, w4], 0.2, com, 0., False, [w1, w2], 4.0, [], cli)
+               cli.update()
                
-                print(color.BOLD + 'Preparation to step: forward roll 0.20 m with back wheels.' + color.END)
-                rollTwoWheelsandMoveCom([w3, w4], 0.2, com, 0., False, [w1, w2], 4.0, [], cli)
-                #time.sleep(3.0)
-                cli.update()
-                #return 0
             
             k += 1
             if primitive == 6:
                 print(color.BOLD + 'Primitive 6: step of 0.20 m with BR foot. (' + str(i+1) + '/' + str(n_primitives) + ')' + color.END)
-                step(moving_foot = w4, still_feet = [w1, w2, w3], step_length = 0.2, duration = 4.0, to_be_disabled = [pelvis], car=car, com=com, cli=cli, filename_pos='com_traj_with_com_vel02/COMtraj_BR.txt', filename_vel = 'com_traj_with_com_vel02/DCOMtraj_BR.txt')
+                step(k, moving_foot = w4, still_feet = [w1, w2, w3], step_length = 0.2, duration = 4.0, to_be_disabled = [pelvis], car=car, com=com, cli=cli, filename_pos=simulation + '/com_traj/COMtraj_BR.txt', filename_vel = simulation + '/com_traj/DCOMtraj_BR.txt', simulation = simulation)
             elif primitive == 7:
                 print(color.BOLD + 'Primitive 7: step of 0.20 m with BL foot. (' + str(i+1) + '/' + str(n_primitives) + ')' + color.END)
-                step(moving_foot = w3, still_feet = [w1, w2, w4], step_length = 0.2, duration = 4.0, to_be_disabled = [pelvis], car=car, com=com, cli=cli, filename_pos='com_traj_with_com_vel02/COMtraj_BL.txt', filename_vel = 'com_traj_with_com_vel02/DCOMtraj_BL.txt')
+                step(k, moving_foot = w3, still_feet = [w1, w2, w4], step_length = 0.2, duration = 4.0, to_be_disabled = [pelvis], car=car, com=com, cli=cli, filename_pos=simulation + '/com_traj/COMtraj_BL.txt', filename_vel = simulation + '/com_traj/DCOMtraj_BL.txt', simulation = simulation)
             elif primitive == 8:
                 print(color.BOLD + 'Primitive 8: step of 0.20 m with FR foot. (' + str(i+1) + '/' + str(n_primitives) + ')' + color.END)
                 cli.update()
-                step(moving_foot = w2, still_feet = [w1, w3, w4], step_length = 0.2, duration = 4.0, to_be_disabled = [pelvis], car=car, com=com, cli=cli, filename_pos='com_traj_with_com_vel02/COMtraj_FR.txt', filename_vel = 'com_traj_with_com_vel02/DCOMtraj_FR.txt')
+                step(k, moving_foot = w2, still_feet = [w1, w3, w4], step_length = 0.2, duration = 4.0, to_be_disabled = [pelvis], car=car, com=com, cli=cli, filename_pos=simulation + '/com_traj/COMtraj_FR.txt', filename_vel = simulation + '/com_traj/DCOMtraj_FR.txt', simulation = simulation)
             elif primitive == 9:
                 print(color.BOLD + 'Primitive 9: step of 0.20 m with FL foot. (' + str(i+1) + '/' + str(n_primitives) + ')' + color.END)
-                step(moving_foot = w1, still_feet = [w2, w3, w4], step_length = 0.2, duration = 4.0, to_be_disabled = [pelvis], car=car, com=com, cli=cli, filename_pos='com_traj_with_com_vel02/COMtraj_FL.txt', filename_vel = 'com_traj_with_com_vel02/DCOMtraj_FL.txt')
+                step(k, moving_foot = w1, still_feet = [w2, w3, w4], step_length = 0.2, duration = 4.0, to_be_disabled = [pelvis], car=car, com=com, cli=cli, filename_pos=simulation + '/com_traj/COMtraj_FL.txt', filename_vel = simulation + '/com_traj/DCOMtraj_FL.txt', simulation = simulation)
             
         #time.sleep(3.0)
         cli.update()
