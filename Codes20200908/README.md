@@ -32,7 +32,8 @@ Variables that can be decided by user:
 - maximum distance that can be traveled by a foot during a movement (line 53);
 - (fixed) leg length (line 55);
 - nominal length and width of the support polygon and their allowed variations (lines 57-60);
-- friction cones specifications (lines 120-121).
+- friction cones specifications (lines 120-121);
+- solver options (lines 343-345).
 
 ### Planning with OMPL
 The following information are referred to the code in `Planning/03. Quadruped_as_Unicycle_OMPL/B. With_Gap/src/Quadruped_Unicycle.cpp`. Using the sampling-based method, you can plan a sequence of stances for a quadrupedal robot.
@@ -47,3 +48,33 @@ Variables that can be decided by user:
 Once a path is returned (`path.txt`), it can be seen using `Planning/03. Quadruped_as_Unicycle_OMPL/B. With_Gap/plot.py`, changing the parameters of the environment and the start and goal configuration if needed (lines 38-67). Additionally, finishing operations (aggregation of primitives of "the same kind") can be performed running `Planning/03. Quadruped_as_Unicycle_OMPL/B. With_Gap/clean.py`.
 
 Similarly for the other sampling-based planners (`Planning/01. Compass_OMPL`, `Planning/02. Biped_OMPL`, `Planning/03. Quadruped_as_Unicycle_OMPL/A. No_Step`).
+
+### CoM Trajectory Generation
+After generating a path with OMPL, optimal CoM trajectory for the step tasks can be generated running the code in `Tasks/Com_Traj_for_Steps_CASADI/Com_Traj.py`. 
+
+Variables that can be decided by user:
+- mass of the robot (line 7);
+- step length (line 15, compliant with the planner);
+- timing specifications (lines 20-24);
+- bounds (lines 64-72);
+- weights of cost function (lines 98-102);
+- friction cones specifications (lines 129-130);
+- solver options (lines 406-408).
+
+### Whole-body Motion Generation
+In the `centauro_cartesio-devel-cpack` package in your catkin workspace, in the `Python` folder, place subfolders containing the file with the path and a folder with the CoM trajectories.
+
+If you want, you can modify `centauro_car_model_stack.yaml` in order to change the hierarchy of tasks in the `configs` folder (not recommended).
+
+Cartesian trajectories are designed in the file `Cartesian_Task.py`, found in the `Python` folder. Variables that can be decided by user:
+- sampling time for the Cartesian trajectories (lines 67, 130, 184);
+- name of the simulation (that is, the name of the folder containing the files) (line 434);
+- Python folder path (line 435);
+- primitive dimensions (lines 461-463, compliant with the planner);
+- primitive timings (lines 466-468, compliant with the CoM trajectory generation for the step along with lines 325-326 for the step phases).
+
+To run CartesI/O for the whole-body motion generation:
+1. Launch `roscore`;
+2. Run `mon launch centauro_cartesio centauro_car_model.launch`;
+3. Launch `rviz` (only for visualization purposes);
+4. Run `rosrun centauro_cartesio Cartesian_Task.py` in order to execute the path and the relative Cartesian trajectories.
