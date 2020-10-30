@@ -49,6 +49,24 @@ epsilon = 0.01
 gap_min = x_min - epsilon
 gap_max = x_max + epsilon
 
+# Other robot parameters
+max_foot_var = 0.5
+
+leg_length = 0.5
+
+nominal_length = 2
+nominal_ width = 1
+length_var = 1
+width_var = 0.5
+
+max_length = nominal_length + length_var
+min_length = nominal_length - length_var
+max_width = nominal_width + width_var
+min_width = nominal_width - width_var
+
+max_sq_crossed = max_length**2 + max_width**2
+min_sq_crossed = min_length**2 + min_width**2
+
 
 # Symbolic variables
 comF = SX.sym('comF', dim_comF)
@@ -65,8 +83,6 @@ force = SX.sym('force', 3)
 g_vec = SX([0.,0.,-9.81,0.,0.,0.])
 I3 = SX.eye(3)
 tau_CS = SX.sym('tau_CS', 6)
-mF = 50.
-mB = 50.
 
 com_whole = (comF*mF + comB * mB)/(mF + mB)
 delta = p[0:12] - vertcat(com_whole, com_whole, com_whole, com_whole)
@@ -281,18 +297,13 @@ for k in range(ns):
     if k < ns-1 :
         g += [dot(P_BR_k - P[k+1][0:3], P_BR_k - P[k+1][0:3]), dot(P_BL_k - P[k+1][3:6], P_BL_k - P[k+1][3:6]), dot(P_FR_k - P[k+1][6:9], P_FR_k - P[k+1][6:9]), dot(P_FL_k - P[k+1][9:12], P_FL_k - P[k+1][9:12])]
         g_min += np.zeros((4, 1)).tolist()
-        g_max += np.array([0.25, 0.25, 0.25, 0.25]).tolist()
+        g_max += np.array([max_foot_var**2, max_foot_var**2, max_foot_var**2, max_foot_var**2]).tolist()
        
     # feet distance is bounded
-    
     g += [dot(P_BR_k - P_FR_k, P_BR_k - P_FR_k), dot(P_BL_k - P_FL_k, P_BL_k - P_FL_k), dot(P_BR_k - P_BL_k, P_BR_k - P_BL_k), dot(P_FR_k - P_FL_k, P_FR_k - P_FL_k), dot(P_BR_k - P_FL_k, P_BR_k - P_FL_k), dot(P_BL_k-P_FR_k, P_BL_k-P_FR_k)]
-    g_min += np.array([1., 1., 0.25, 0.25, 1.25, 1.25]).tolist()
-    g_max += np.array([9., 9., 2.25, 2.25, 11.25, 11.25]).tolist()
-    '''
-    g += [dot(P_BR_k - P_FR_k, P_BR_k - P_FR_k), dot(P_BL_k - P_FL_k, P_BL_k - P_FL_k), dot(P_BR_k - P_BL_k, P_BR_k - P_BL_k), dot(P_FR_k - P_FL_k, P_FR_k - P_FL_k)]
-    g_min += np.array([1., 1., 0.25, 0.25]).tolist()
-    g_max += np.array([9., 9., 2.25, 2.25]).tolist()
-    '''
+    g_min += np.array([min_length**2, min_length**2, min_width**2, min_width**2, min_sq_crossed, min_sq_crossed]).tolist()
+    g_max += np.array([max_length**2, max_length**2, max_width**2, max_width**2, max_sq_crossed, max_sq_crossed]).tolist()
+    
     # one and only one foot at time can be moved
     if k < ns-1 :
         move_BR = dot(P_BR_k - P[k+1][0:3], P_BR_k - P[k+1][0:3])
@@ -307,10 +318,8 @@ for k in range(ns):
     # COMs to feet constraints
     dist_coms_feet_k = F_sqdist(p=P[k], comB=COMB_k, comF=COMF_k)['dist_coms_feet']
     g += [dist_coms_feet_k]
-    min_dist = 0.5
-    max_dist = 0.5
-    g_min += np.array([min_dist, min_dist, min_dist, min_dist]).tolist()
-    g_max += np.array([max_dist, max_dist, max_dist, max_dist]).tolist()
+    g_min += np.array([leg_length, leg_length, leg_length, leg_length]).tolist()
+    g_max += np.array([leg_length, leg_length, leg_length, leg_length]).tolist()
     
     # Gap constraint
     g += [(P_BR_k[0]-gap_min)*(P_BR_k[0]-gap_max), (P_BL_k[0]-gap_min)*(P_BL_k[0]-gap_max), (P_FR_k[0]-gap_min)*(P_FR_k[0]-gap_max), (P_FL_k[0]-gap_min)*(P_FL_k[0]-gap_max)]
@@ -372,24 +381,6 @@ black = tuple(np.array([0., 0., 0.])/255.)
 colors = [blue, red, grey, purple, green, brown, orange, dark_green, pink, black]
 
 
-"""
-fig1 = plt.figure()
-ax = fig1.add_subplot(111, projection='3d')
-ax.set_zlim(0.0, 0.6)
-ax.set_xlim(-2.0, 4.0)
-ax.set_ylim(-0.5, 1.5)
-plt.pause(5)
-for i in range(0, ns):
-    COMF_i = [com_F_hist_value[0][i], com_F_hist_value[1][i], com_F_hist_value[2][i]]
-    COMB_i = [com_B_hist_value[0][i], com_B_hist_value[1][i], com_B_hist_value[2][i]]
-    plt.plot([COMF_i[0], COMB_i[0]], [COMF_i[1], COMB_i[1]], [COMF_i[2], COMB_i[2]], color = colors[i], linewidth=3)
-    plt.plot([COMB_i[0], FOOT_BR[0, i]], [COMB_i[1], FOOT_BR[1, i]], [COMB_i[2], FOOT_BR[2, i]], color = colors[i], linewidth=3)
-    plt.plot([COMB_i[0], FOOT_BL[0, i]], [COMB_i[1], FOOT_BL[1, i]], [COMB_i[2], FOOT_BL[2, i]], color = colors[i], linewidth=3)
-    plt.plot([COMF_i[0], FOOT_FR[0, i]], [COMF_i[1], FOOT_FR[1, i]], [COMF_i[2], FOOT_FR[2, i]], color = colors[i], linewidth=3)
-    plt.plot([COMF_i[0], FOOT_FL[0, i]], [COMF_i[1], FOOT_FL[1, i]], [COMF_i[2], FOOT_FL[2, i]], color = colors[i], linewidth=3)
-    plt.pause(2)
-plt.show()
-"""
 comF_final = comF_final.tolist()
 comB_final = comB_final.tolist()
 
@@ -446,38 +437,10 @@ for i in range(0, ns):
     plt.plot(x_gap_max, y_gap, z_gap, color = black, linewidth = 1)
     plt.plot(x_safe_min, y_gap, z_gap, '--', color = black, linewidth = 1)
     plt.plot(x_safe_max, y_gap, z_gap, '--', color = black, linewidth = 1)
-    """
-    if i != 0:
-        COMF_im1 = [com_F_hist_value[0][i-1], com_F_hist_value[1][i-1], com_F_hist_value[2][i-1]]
-        COMB_im1 = [com_B_hist_value[0][i-1], com_B_hist_value[1][i-1], com_B_hist_value[2][i-1]]
-        plt.plot([COMF_im1[0], COMB_im1[0]], [COMF_im1[1], COMB_im1[1]], [COMF_im1[2], COMB_im1[2]], '--', color = blue, linewidth=2)
-
-        plt.plot([COMB_im1[0], FOOT_BR[0, i-1]], [COMB_im1[1], FOOT_BR[1, i-1]], [COMB_im1[2], FOOT_BR[2, i-1]], '--', color = blue, linewidth=2)
-        plt.plot([COMB_im1[0], FOOT_BL[0, i-1]], [COMB_im1[1], FOOT_BL[1, i-1]], [COMB_im1[2], FOOT_BL[2, i-1]], '--', color = blue, linewidth=2)
-        plt.plot([COMF_im1[0], FOOT_FR[0, i-1]], [COMF_im1[1], FOOT_FR[1, i-1]], [COMF_im1[2], FOOT_FR[2, i-1]], '--', color = blue, linewidth=2)
-        plt.plot([COMF_im1[0], FOOT_FL[0, i-1]], [COMF_im1[1], FOOT_FL[1, i-1]], [COMF_im1[2], FOOT_FL[2, i-1]], '--', color = blue, linewidth=2)
-    """
-    
+   
     
     plt.pause(0.5)
     if i != ns-1:
         ax.remove()
 plt.show()
     
-
-"""
-
-fig2 = plt.figure()
-ax = plt.axes()
-for i in range(1, ns):
-    COMF_i = [com_F_hist_value[0][i], com_F_hist_value[1][i]]
-    COMB_i = [com_B_hist_value[0][i], com_B_hist_value[1][i]]
-
-    COMF_im1 = [com_F_hist_value[0][i-1], com_F_hist_value[1][i-1]]
-    COMB_im1 = [com_B_hist_value[0][i-1], com_B_hist_value[1][i-1]]
-
-    plt.plot([COMF_i[0], COMF_im1[0]],[COMF_i[1], COMF_im1[1]], '.-', color = blue, linewidth=2)
-    plt.plot([COMB_i[0], COMB_im1[0]],[COMB_i[1], COMB_im1[1]], '.-', color = red, linewidth=2)
-
-plt.show()
-"""
