@@ -319,7 +319,7 @@ def step(k, moving_foot, still_feet, step_length, duration, to_be_disabled, car,
 
     t = 0.00
     dt = 0.01
-    period = 4.0
+    period = duration
     radius = step_length/2
 
     T1 = 1.0
@@ -431,11 +431,10 @@ def main():
     k = 0
     
     # load file with primitives and number of times they are applied
-    #simulation = 'detour'
-    simulation = '4steps'
-    #simulation = 'experiment'
-    #simulation = 'only4steps'
-    plan = np.loadtxt('/home/francesco/catkin_ws/src/centauro_cartesio-devel-cpack/python/' + simulation + '/plan.txt')
+    simulation = 'detour'# or '4steps', 'experiment', 'only4steps'
+    python_folder_path = '/home/francesco/catkin_ws/src/centauro_cartesio-devel-cpack/python/'
+      
+    plan = np.loadtxt(python_folder_path + simulation + '/plan.txt')
     primitives = plan[:, 0]
     times = plan[:, 1]
 
@@ -457,6 +456,17 @@ def main():
     #homing(car, w1, w2, w3, w4, pelvis, com)
     
     n_primitives = len(primitives)
+   
+    # primitives dimensions
+    spin_dim = m.pi/18
+    roll_dim = 0.05
+    step_dim = 0.20
+    
+    # primitives timings
+    spin_T = 5.0
+    roll_T = 1.0
+    step_T = 4.0
+   
 
     # executes planner indications
     for i in range(0, n_primitives):
@@ -466,22 +476,22 @@ def main():
       
         if primitive == 0:
             print(color.BOLD + 'Primitive 0: clockwise spin of 10 deg for ' + str(int(application)) + ' times. (' + str(i+1) + '/' + str(n_primitives) + ')' + color.END)
-            spin(car, [w1, w2, w3, w4], -m.pi/18 * application, 5.0 * application, [com], cli)
+            spin(car, [w1, w2, w3, w4], -spin_dim * application, spin_T * application, [com], cli)
         elif primitive == 1:
             print(color.BOLD + 'Primitive 1: counter-clockwise spin of 10 deg for ' + str(int(application)) + ' times. (' + str(i+1) + '/' + str(n_primitives) + ')' + color.END)
-            spin(car, [w1, w2, w3, w4], m.pi/18 * application, 5.0 * application, [com], cli)
+            spin(car, [w1, w2, w3, w4], spin_dim * application, spin_T * application, [com], cli)
         elif primitive == 2:
             print(color.BOLD + 'Primitive 2: forward roll of 0.05 m for ' + str(int(application)) + ' times. (' + str(i+1) + '/' + str(n_primitives) + ')' + color.END)
-            roll(car, [w1, w2, w3, w4], 0.05 * application, 'x', 1.0 * application, [com], cli, application, simulation)
+            roll(car, [w1, w2, w3, w4], roll_dim * application, 'x', roll_T * application, [com], cli, application, simulation)
         elif primitive == 3:
             print(color.BOLD + 'Primitive 3: backward roll of 0.05 m for ' + str(int(application)) + ' times. (' + str(i+1) + '/' + str(n_primitives) + ')' + color.END)
-            roll(car, [w1, w2, w3, w4], -0.05 * application, 'x', 1.0 * application, [com], cli, application, simulation)
+            roll(car, [w1, w2, w3, w4], -roll_dim * application, 'x', roll_T * application, [com], cli, application, simulation)
         elif primitive == 4:
             print(color.BOLD + 'Primitive 4: right roll of 0.05 m for ' + str(int(application)) + ' times. (' + str(i+1) + '/' + str(n_primitives) + ')' + color.END)
-            roll(car, [w1, w2, w3, w4], 0.05 * application, 'y', 1.0 * application, [com], cli, application, simulation)
+            roll(car, [w1, w2, w3, w4], roll_dim * application, 'y', roll_T * application, [com], cli, application, simulation)
         elif primitive == 5:
             print(color.BOLD + 'Primitive 5: left roll of 0.05 m for ' + str(int(application)) + ' times. (' + str(i+1) + '/' + str(n_primitives) + ')' + color.END)
-            roll(car, [w1, w2, w3, w4], -0.05 * application, 'y', 1.0 * application, [com], cli, application, simulation)
+            roll(car, [w1, w2, w3, w4], -roll_dim * application, 'y', roll_T * application, [com], cli, application, simulation)
         else:
            
             if k == 0:
@@ -490,37 +500,35 @@ def main():
                    roll(car, [w1, w2, w3, w4], 0.135, 'x', 3.0, [com], cli, application)
                 
                print(color.BOLD + 'Preparation to step: forward roll 0.20 m with back wheels.' + color.END)
-               rollTwoWheelsandMoveCom([w3, w4], 0.2, com, 0., False, [w1, w2], 4.0, [], cli)
+               rollTwoWheelsandMoveCom([w3, w4], step_dim, com, 0., False, [w1, w2], step_T, [], cli)
                cli.update()
                
             
             k += 1
             if primitive == 6:
                 print(color.BOLD + 'Primitive 6: step of 0.20 m with BR foot. (' + str(i+1) + '/' + str(n_primitives) + ')' + color.END)
-                step(k, moving_foot = w4, still_feet = [w1, w2, w3], step_length = 0.2, duration = 4.0, to_be_disabled = [pelvis], car=car, com=com, cli=cli, filename_pos=simulation + '/com_traj/COMtraj_BR.txt', filename_vel = simulation + '/com_traj/DCOMtraj_BR.txt', simulation = simulation)
+                step(k, moving_foot = w4, still_feet = [w1, w2, w3], step_length = step_dim, duration = step_T, to_be_disabled = [pelvis], car=car, com=com, cli=cli, filename_pos=simulation + '/com_traj/COMtraj_BR.txt', filename_vel = simulation + '/com_traj/DCOMtraj_BR.txt', simulation = simulation)
             elif primitive == 7:
                 print(color.BOLD + 'Primitive 7: step of 0.20 m with BL foot. (' + str(i+1) + '/' + str(n_primitives) + ')' + color.END)
-                step(k, moving_foot = w3, still_feet = [w1, w2, w4], step_length = 0.2, duration = 4.0, to_be_disabled = [pelvis], car=car, com=com, cli=cli, filename_pos=simulation + '/com_traj/COMtraj_BL.txt', filename_vel = simulation + '/com_traj/DCOMtraj_BL.txt', simulation = simulation)
+                step(k, moving_foot = w3, still_feet = [w1, w2, w4], step_length = step_dim, duration = step_T, to_be_disabled = [pelvis], car=car, com=com, cli=cli, filename_pos=simulation + '/com_traj/COMtraj_BL.txt', filename_vel = simulation + '/com_traj/DCOMtraj_BL.txt', simulation = simulation)
             elif primitive == 8:
                 print(color.BOLD + 'Primitive 8: step of 0.20 m with FR foot. (' + str(i+1) + '/' + str(n_primitives) + ')' + color.END)
                 cli.update()
-                step(k, moving_foot = w2, still_feet = [w1, w3, w4], step_length = 0.2, duration = 4.0, to_be_disabled = [pelvis], car=car, com=com, cli=cli, filename_pos=simulation + '/com_traj/COMtraj_FR.txt', filename_vel = simulation + '/com_traj/DCOMtraj_FR.txt', simulation = simulation)
+                step(k, moving_foot = w2, still_feet = [w1, w3, w4], step_length = step_dim, duration = step_T, to_be_disabled = [pelvis], car=car, com=com, cli=cli, filename_pos=simulation + '/com_traj/COMtraj_FR.txt', filename_vel = simulation + '/com_traj/DCOMtraj_FR.txt', simulation = simulation)
             elif primitive == 9:
                 print(color.BOLD + 'Primitive 9: step of 0.20 m with FL foot. (' + str(i+1) + '/' + str(n_primitives) + ')' + color.END)
-                step(k, moving_foot = w1, still_feet = [w2, w3, w4], step_length = 0.2, duration = 4.0, to_be_disabled = [pelvis], car=car, com=com, cli=cli, filename_pos=simulation + '/com_traj/COMtraj_FL.txt', filename_vel = simulation + '/com_traj/DCOMtraj_FL.txt', simulation = simulation)
+                step(k, moving_foot = w1, still_feet = [w2, w3, w4], step_length = step_dim, duration = step_T, to_be_disabled = [pelvis], car=car, com=com, cli=cli, filename_pos=simulation + '/com_traj/COMtraj_FL.txt', filename_vel = simulation + '/com_traj/DCOMtraj_FL.txt', simulation = simulation)
             
         #time.sleep(3.0)
         cli.update()
         
         if k == 4:
             print(color.BOLD + 'Conclusion of step: forward roll 0.20 m with front wheels.' + color.END)
-            rollTwoWheelsandMoveCom([w1, w2], 0.2, com, 0.1, True, [w3, w4], 3.0, [pelvis], cli)
-            #time.sleep(3.0)
+            rollTwoWheelsandMoveCom([w1, w2], step_dim, com, 0.1, True, [w3, w4], 3.0, [pelvis], cli)
             cli.update()
 
             print(color.BOLD + 'Realigning car_frame with the center of the support polygon...' + color.END)
             movecar(car, [w1, w2, w3, w4], 5.0, [pelvis], cli)
-            #time.sleep(3.0)
             cli.update()
             
             k = 0
