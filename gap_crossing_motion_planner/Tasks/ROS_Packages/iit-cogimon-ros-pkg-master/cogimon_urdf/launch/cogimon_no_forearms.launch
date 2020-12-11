@@ -1,0 +1,15 @@
+<launch>
+
+     <!-- send the cogimon robot XML to param server -->
+     <param name="robot_description" command="$(find xacro)/xacro.py '$(find cogimon_urdf)/urdf/cogimon_no_forearms.urdf'" />
+     
+     <!-- send the cogimon robot XML to param server -->
+    <param name="robot_description_semantic" textfile="$(find cogimon_srdf)/srdf/cogimon_no_forearms.srdf" />   
+
+    <!-- start robot state publisher -->
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen" >
+        <!--remap from="joint_states" to="cogimon/joints_state"/-->
+        <param name="publish_frequency" type="double" value="50.0" />
+    </node> 
+
+</launch>

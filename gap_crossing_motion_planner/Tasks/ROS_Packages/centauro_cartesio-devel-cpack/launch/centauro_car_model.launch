@@ -1,0 +1,34 @@
+<launch>
+
+    <arg name="rate" default="100.0"/>
+    <arg name="prefix" default=""/>
+    
+    <param name="model_description/robot_description" 
+        textfile="$(find centauro_cartesio)/configs/urdf/centauro_car.urdf"/>
+    
+    <param name="model_description/robot_description_semantic"
+        textfile="$(find centauro_cartesio)/configs/srdf/centauro_car.srdf"/>
+        
+    <param name="robot_description" 
+        textfile="$(find centauro_cartesio)/configs/CentauroConfig/urdf/centauro.urdf"/>
+    
+    <param name="robot_description_semantic"
+        textfile="$(find centauro_cartesio)/configs/CentauroConfig/srdf/centauro.srdf"/>
+    
+    <param name="cartesian/problem_description" 
+        textfile="$(find centauro_cartesio)/configs/centauro_car_model_stack.yaml"/>
+    
+    <param name="cartesian/joint_blacklist" type="yaml" 
+        value="[neck_velodyne]"/>
+        
+    <param name="cartesian/velocity_whitelist" type="yaml" 
+        value="[j_wheel_1, j_wheel_2, j_wheel_3, j_wheel_4]"/>
+    
+
+    <include file="$(find cartesian_interface)/launch/cartesio.launch">
+        <arg name="rate" value="$(arg rate)"/>
+        <arg name="prefix" value="$(arg prefix)"/>
+    </include>
+    
+
+</launch>

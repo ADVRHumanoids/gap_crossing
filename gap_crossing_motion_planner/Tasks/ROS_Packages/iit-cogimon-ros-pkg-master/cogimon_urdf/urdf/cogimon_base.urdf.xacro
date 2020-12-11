@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+<!-- 
+  ROS urdf definition of the COGIMON humanoid robot by Istituto Italiano di Tecnologia
+  
+  DO NOT INCLUDE THIS FILE DIRECTLY! USE cogimon_robot.urdf.xacro INSTEAD!
+
+  Author: Enrico Mingo Hoffman
+
+  Inertial matrix has to be in CoM frame (URDF specs)
+
+-->
+
+<!-- This links are defined in order to be compliant with http://www.ros.org/reps/rep-0120.html#coordinate-frames
+and to define the end effectors of the robot
+
+The coordinate frame called base_link is rigidly attached to the robot root body. It is recommended to choose the robot waist as its root body. The base_link can be attached to the root in any arbitrary position or orientation; for every hardware platform there will be a different place on the base that provides an obvious point of reference. Note that REP 103 [1] specifies a preferred orientation for frames. -->
+<link name="base_link"/>
+
+<link name="Waist">
+    <inertial>
+      <origin xyz="${-5.6796324e+01*mmTom} ${4.5196345e-01*mmTom} ${-3.8136153e+01*mmTom}" rpy="0.0 0.0 0.0"/>
+      <mass value="3.4599462"/>
+      <inertia ixx="${3.8130318e+04*mm2Tom2}"  ixy="${9.5451056e+01*mm2Tom2}"  ixz="${-8.2481481e+01*mm2Tom2}" iyy="${8.9760596e+03*mm2Tom2}" iyz="${9.1637353e+00*mm2Tom2}" izz="${3.9650845e+04*mm2Tom2}" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="dark_grey"/>
+      <geometry name="Waist_visual">
+        <mesh filename="package://cogimon_urdf/meshes/Waist.stl" scale="${mmTom} ${mmTom} ${mmTom}"/>
+      </geometry>
+    </visual> 
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry name="Waist_collision">
+        <mesh filename="package://cogimon_urdf/meshes/simple/Waist.stl" scale="${mmTom} ${mmTom} ${mmTom}"/>
+      </geometry>             
+    </collision>   
+</link>
+
+<joint name="base_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="Waist"/>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+</joint>
+
+<joint name="imu_joint" type="fixed">
+    <parent link="Waist"/>
+    <child link="imu_link"/>
+    <origin xyz="${-146.332*mmTom} 0 ${-38.75*mmTom}" rpy="0 0 0" />
+</joint>
+
+<link name="imu_link">
+    <inertial>
+      <mass value="0.01"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1.0E-6" ixy="0" ixz="0" iyy="1.0E-6" iyz="0" izz="1.0E-6"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+    </visual>
+</link>
+
+
+<!-- SELECTION OF KINEMATICS CHAINS IS HANDLED INSIDE THE FILES -->
+<xacro:include filename="$(find cogimon_urdf)/urdf/parts/legs.urdf.xacro" />
+<xacro:include filename="$(find cogimon_urdf)/urdf/parts/torso.urdf.xacro" />
+<xacro:include filename="$(find cogimon_urdf)/urdf/parts/arms.urdf.xacro" />
+<xacro:include filename="$(find cogimon_urdf)/urdf/parts/head.urdf.xacro" />
+<xacro:include filename="$(find cogimon_urdf)/urdf/parts/soft_hands.urdf.xacro" />
+
+</robot>
+
+
+
